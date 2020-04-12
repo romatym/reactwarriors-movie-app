@@ -38,9 +38,11 @@ export default class App extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!prevState.user && this.state.user) {
-      this.uploadFavorite(this.state.user, this.state.session_id);
-      this.uploadWatchlist(this.state.user, this.state.session_id);
+    const { user, session_id } = this.state;
+
+    if (!prevState.user && user) {
+      this.getFavoriteMovies(user, session_id);
+      this.getWatchlistMovies(user, session_id);
     }
   }
 
@@ -76,7 +78,7 @@ export default class App extends React.Component {
     }));
   };
 
-  uploadFavorite = (user, session_id) => {
+  getFavoriteMovies = (user, session_id) => {
     CallApi.get(`/account/${user.id}/favorite/movies`, {
       params: {
         session_id: session_id,
@@ -89,7 +91,7 @@ export default class App extends React.Component {
     });
   };
 
-  uploadWatchlist = (user, session_id) => {
+  getWatchlistMovies = (user, session_id) => {
     //const { session_id, user } = this.state;
 
     CallApi.get(`/account/${user.id}/watchlist/movies`, {
@@ -126,8 +128,8 @@ export default class App extends React.Component {
             onLogOut: this.onLogOut,
             showLoginModal: showLoginModal,
             toggleShowLogin: this.toggleShowLogin,
-            uploadFavorite: this.uploadFavorite,
-            // toggleWatchlist: this.toggleWatchlist
+            getFavoriteMovies: this.getFavoriteMovies,
+            getWatchlistMovies: this.getWatchlistMovies,
           }}
         >
           <div>

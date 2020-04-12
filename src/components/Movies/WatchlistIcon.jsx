@@ -2,50 +2,37 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Bookmark, BookmarkBorder } from "@material-ui/icons";
 import CallApi from "../../api/api";
-import { AppContext } from "../App";
+import AppContextHOC from "../HOC/AppContextHOC";
 
-const WatchlistIcon = ({ item }) => {
-  return (
-    <AppContext.Consumer>
-      {context => {
-        // console.log("context", context);
-
-        const isWatchlist = Boolean(
-          context.watchlist.find(movie => {
-            return movie.id === item.id;
-          })
-        );
-
-        return isWatchlist ? (
-          <Bookmark onClick={e => onClickWatchlist(item, false, context)} />
-        ) : (
-          <BookmarkBorder onClick={e => onClickWatchlist(item, true, context)} />
-        );
-      }}
-    </AppContext.Consumer>
-  );
-};
-
-const onClickWatchlist = (item, newValue, context) => {
-  const { user, session_id, uploadWatchlist, toggleShowLogin } = context;
-
-  if (!session_id) {
-    toggleShowLogin();
-    return;
-  }
-
-  CallApi.post(`/account/${user.id}/watchlist`, {
-    params: {
-      session_id: session_id,
-      media_type: "movie",
-      media_id: item.id,
-      watchlist: newValue
+const WatchlistIcon = (props) => {
+  const { item, watchlist } = props;
+  const isWatchlist = watchlist.some((movie) => movie.id === item.id);
+  
+  const onClickWatchlist = () => {
+    const { user, session_id, getWatchlistMovies, toggleShowLogin } = props;
+    if (!session_id) {
+      toggleShowLogin();
+      return;
     }
-  }).then(
-    response => {
-      uploadWatchlist(user, session_id);
-    },
-    reject => {}
+
+    CallApi.post(`/account/${user.id}/watchlist`, {
+      params: {
+        session_id,
+        media_type: "movie",
+        media_id: item.id,
+        watchlist: !isWatchlist,
+      },
+    })
+      .then(() => {
+        getWatchlistMovies(user, session_id);
+      })
+      .catch((error) => {});
+  };
+
+  return isWatchlist ? (
+    <Bookmark onClick={onClickWatchlist} />
+  ) : (
+    <BookmarkBorder onClick={onClickWatchlist} />
   );
 };
 
@@ -55,4 +42,4 @@ WatchlistIcon.propTypes = {
   // onClickWatchlist: PropTypes.func.isRequired
 };
 
-export default WatchlistIcon;
+export default AppContextHOC(WatchlistIcon);

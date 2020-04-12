@@ -6,11 +6,10 @@ import AppContextHOC from "../HOC/AppContextHOC";
 
 const FavoriteIcon = (props) => {
   const { item, favorite } = props;
-
   const isFavorite = favorite.some((movie) => movie.id === item.id);
 
   const onClickFavorite = () => {
-    const { user, session_id, uploadFavorite, toggleShowLogin } = props;
+    const { user, session_id, getFavoriteMovies, toggleShowLogin } = props;
     if (!session_id) {
       toggleShowLogin();
       return;
@@ -25,7 +24,7 @@ const FavoriteIcon = (props) => {
       },
     })
       .then(() => {
-        uploadFavorite(user, session_id);
+        getFavoriteMovies(user, session_id);
       })
       .catch((error) => {});
   };
