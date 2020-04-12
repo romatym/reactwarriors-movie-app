@@ -7,62 +7,10 @@ import AppContextHOC from "../HOC/AppContextHOC";
 import { Link } from "react-router-dom";
 
 class MovieItem extends React.Component {
-  // onClickFavorite = (item, newValue) => {
-  //   const { user, session_id, toggleFavorite, toggleShowLogin } = this.props;
-
-  //   if (!session_id) {
-  //     toggleShowLogin();
-  //     return;
-  //   }
-
-  //   CallApi.post(`/account/${user.id}/favorite`, {
-  //     params: {
-  //       session_id: session_id,
-  //       media_type: "movie",
-  //       media_id: item.id,
-  //       favorite: newValue
-  //     }
-  //   }).then(
-  //     response => {
-  //       toggleFavorite(item);
-  //     },
-  //     reject => {}
-  //   );
-  // };
-
-  // onClickWatchlist = (item, newValue) => {
-  //   const { user, session_id, toggleWatchlist, toggleShowLogin } = this.props;
-
-  //   if (!session_id) {
-  //     toggleShowLogin();
-  //     return;
-  //   }
-
-  //   CallApi.post(`/account/${user.id}/watchlist`, {
-  //     params: {
-  //       session_id: session_id,
-  //       media_type: "movie",
-  //       media_id: item.id,
-  //       watchlist: newValue
-  //     }
-  //   }).then(
-  //     response => {
-  //       toggleWatchlist(item);
-  //     },
-  //     reject => {}
-  //   );
-  // };
 
   render() {
     const { item } = this.props;
     const imagePath = item.backdrop_path || item.poster_path;
-
-    // const isFavorite = Boolean(favorite.find(movie => {
-    //   return movie.id === item.id;
-    // }));
-    // const isWatchlist = Boolean(watchlist.find(movie => {
-    //   return movie.id === item.id;
-    // }));
 
     return (
       <div className="card" style={{ width: "100%" }}>
