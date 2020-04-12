@@ -34,6 +34,7 @@ export default class MoviePage extends React.Component {
     }
 
     const imagePath = movie.backdrop_path || movie.poster_path;
+    const releaseYear = movie.release_date.slice(0,4);
 
     return (
       <div className="card mb-3" style={{ maxWidth: "70%" }}>
@@ -52,7 +53,7 @@ export default class MoviePage extends React.Component {
 
           <div className="col-md-8">
             <div className="card-body">
-              <h2 className="card-title">{movie.title}</h2>
+            <h2 className="card-title">{movie.title} ({releaseYear})</h2>
               <p className="card-text">
                 <p className="text-muted">{movie.tagline}</p>
               </p>
