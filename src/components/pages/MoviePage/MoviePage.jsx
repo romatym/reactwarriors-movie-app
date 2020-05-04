@@ -12,7 +12,7 @@ import {
   NavLink,
   Card,
   CardImg,
-  //Button,
+  //CardSubtitle,
   CardTitle,
   //CardText,
   Row,
@@ -26,6 +26,9 @@ function MoviePage(props) {
   const [movie, setMovie] = useState();
   const [videos, setVideos] = useState([]);
   const [videosLoaded, setVideosLoaded] = useState(false);
+  const [creditsCast, setCreditsCast] = useState([]);
+  //const [creditsCrew, setCreditsCrew] = useState([]);
+  const [creditsLoaded, setCreditsLoaded] = useState(false);
 
   useEffect(() => {
     CallApi.get(`/movie/${movieId}`, {
@@ -37,7 +40,7 @@ function MoviePage(props) {
     });
   }, [movieId]);
 
-  const uploadRelatedVideos = () => {
+  const uploadVideos = () => {
     CallApi.get(`/movie/${movieId}/videos`, {
       params: {
         language: "ru-RU",
@@ -45,6 +48,18 @@ function MoviePage(props) {
     }).then((data) => {
       setVideos(data.results);
       setVideosLoaded(true);
+    });
+  };
+
+  const uploadCredits = () => {
+    CallApi.get(`/movie/${movieId}/credits`, {
+      params: {
+        language: "ru-RU",
+      },
+    }).then((data) => {
+      setCreditsCast(data.cast);
+      //setCreditsCrew(data.crew);
+      setCreditsLoaded(true);
     });
   };
 
@@ -119,7 +134,7 @@ function MoviePage(props) {
                     className={classnames({ active: activeTab === "2" })}
                     onClick={() => {
                       toggleTab("2");
-                      uploadRelatedVideos();
+                      uploadVideos();
                     }}
                   >
                     Видео
@@ -130,6 +145,7 @@ function MoviePage(props) {
                     className={classnames({ active: activeTab === "3" })}
                     onClick={() => {
                       toggleTab("3");
+                      uploadCredits();
                     }}
                   >
                     Актеры
@@ -206,62 +222,37 @@ function MoviePage(props) {
                         </Card>
                       );
                     })}
-
-
-                    {/* {videos.map((video) => {
-                      return (
-                        <div key={video.id} className="col-6 mb-4">
-                          <a
-                            href={`https://www.youtube.com/watch?v=${video.key}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <img
-                              className="card-img-top card-img--height"
-                              src={
-                                imagePath
-                                  ? `https://img.youtube.com/vi/${video.key}/mqdefault.jpg`
-                                  : ""
-                              }
-                              alt=""
-                            />
-                          </a>
-                          <CardTitle className="text-center">
-                            {video.name}
-                          </CardTitle>
-                        </div>
-                      );
-                    })} */}
-
                   </Row>
-                  {/* <Row>
-                    <Col sm="6">
-                      <Card body>
-                        <CardTitle>Special Title Treatment</CardTitle>
-                        <CardText>
-                          With supporting text below as a natural lead-in to
-                          additional content.
-                        </CardText>
-                        <Button>Go somewhere</Button>
-                      </Card>
-                    </Col>
-                    <Col sm="6">
-                      <Card body>
-                        <CardTitle>Special Title Treatment</CardTitle>
-                        <CardText>
-                          With supporting text below as a natural lead-in to
-                          additional content.
-                        </CardText>
-                        <Button>Go somewhere</Button>
-                      </Card>
-                    </Col>
-                  </Row> */}
                 </TabPane>
                 <TabPane tabId="3">
                   <Row>
-                    <Col sm="12">
+                    {/* <Col sm="12">
                       <h4>Tab 3 Contents</h4>
-                    </Col>
+                    </Col> */}
+                    {!creditsLoaded && (
+                      <div className="loader text-center"></div>
+                    )}
+                    {creditsCast.map((actor) => {
+                      return (
+                        <Col sm="4" key={actor.id}>
+                          <Card body className="cast-img--height">
+                            <CardTitle className="text-center">
+                              Роль: {actor.character}
+                            </CardTitle>
+                            <CardTitle className="text-center">
+                              Актер: {actor.name}
+                            </CardTitle>
+                            <CardImg
+                              
+                              src={actor.profile_path
+                                ? `https://image.tmdb.org/t/p/w500${actor.profile_path}`
+                                : ""}
+                              alt=""
+                            />
+                          </Card>
+                        </Col>
+                      );
+                    })}
                   </Row>
                 </TabPane>
               </TabContent>

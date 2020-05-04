@@ -55,3 +55,8 @@ input.invalid {
 .top-indent {
   margin-top: 20px;
 }
+
+.cast-img--height {
+  max-height: 400px;
+  object-fit: fill;
+}
