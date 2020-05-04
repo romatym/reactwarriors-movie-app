@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import CallApi from "../../../api/api";
 import FavoriteIcon from "../../Movies/FavoriteIcon";
 import WatchlistIcon from "../../Movies/WatchlistIcon";
+//import MovieItem from "../../Movies/MovieItem";
 // import { AppContext } from "../../App";
 import {
   TabContent,
@@ -10,9 +11,10 @@ import {
   NavItem,
   NavLink,
   Card,
-  Button,
+  CardImg,
+  //Button,
   CardTitle,
-  CardText,
+  //CardText,
   Row,
   Col,
 } from "reactstrap";
@@ -22,24 +24,36 @@ function MoviePage(props) {
   const movieId = props.match.params.id;
   const [activeTab, setActiveTab] = useState("1");
   const [movie, setMovie] = useState();
+  const [videos, setVideos] = useState([]);
+  const [videosLoaded, setVideosLoaded] = useState(false);
 
-  useEffect(
-    (movie) => {
-      CallApi.get(`/movie/${movieId}`, {
-        params: {
-          language: "ru-RU",
-        },
-      }).then((data) => {
-        movie = data;
-        setMovie(data);
-      });
-    },
-    [movieId]
-  );
+  useEffect(() => {
+    CallApi.get(`/movie/${movieId}`, {
+      params: {
+        language: "ru-RU",
+      },
+    }).then((data) => {
+      setMovie(data);
+    });
+  }, [movieId]);
+
+  const uploadRelatedVideos = () => {
+    CallApi.get(`/movie/${movieId}/videos`, {
+      params: {
+        language: "ru-RU",
+      },
+    }).then((data) => {
+      setVideos(data.results);
+      setVideosLoaded(true);
+    });
+  };
 
   const toggleTab = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
+
+  // console.log("movie", movie);
+  // console.log("videos", videos);
 
   if (!movie) {
     return <div className="loader"></div>;
@@ -48,7 +62,11 @@ function MoviePage(props) {
   const imagePath = movie.backdrop_path || movie.poster_path;
   const releaseYear = movie.release_date.slice(0, 4);
   const genresList = movie.genres.map((genre) => {
-    return <span className="badge badge-primary badge-pill">{genre.name}</span>;
+    return (
+      <span key={genre.id} className="badge badge-primary badge-pill">
+        {genre.name}
+      </span>
+    );
   });
 
   return (
@@ -72,7 +90,7 @@ function MoviePage(props) {
               {movie.title} ({releaseYear})
             </h2>
             <p className="card-text">
-              <div className="text-muted">{movie.tagline}</div>
+              <span className="text-muted">{movie.tagline}</span>
             </p>
             <h5 className="card-text">Обзор</h5>
             <p className="card-text">{movie.overview}</p>
@@ -84,7 +102,7 @@ function MoviePage(props) {
               </div>
             </div>
 
-            <div>
+            <div className="top-indent">
               <Nav tabs>
                 <NavItem>
                   <NavLink
@@ -101,9 +119,10 @@ function MoviePage(props) {
                     className={classnames({ active: activeTab === "2" })}
                     onClick={() => {
                       toggleTab("2");
+                      uploadRelatedVideos();
                     }}
                   >
-                    Похожие фильмы
+                    Видео
                   </NavLink>
                 </NavItem>
                 <NavItem>
@@ -121,7 +140,7 @@ function MoviePage(props) {
                 <TabPane tabId="1">
                   <Row>
                     <Col sm="12">
-                      <table class="table">
+                      <table className="table">
                         <tbody>
                           <tr>
                             <th>Дата выхода</th>
@@ -162,27 +181,81 @@ function MoviePage(props) {
                 </TabPane>
                 <TabPane tabId="2">
                   <Row>
-                    <Col sm="6">
-                      <Card body>
-                        <CardTitle>Special Title Treatment</CardTitle>
-                        <CardText>
-                          With supporting text below as a natural lead-in to
-                          additional content.
-                        </CardText>
-                        <Button>Go somewhere</Button>
-                      </Card>
-                    </Col>
-                    <Col sm="6">
-                      <Card body>
-                        <CardTitle>Special Title Treatment</CardTitle>
-                        <CardText>
-                          With supporting text below as a natural lead-in to
-                          additional content.
-                        </CardText>
-                        <Button>Go somewhere</Button>
-                      </Card>
-                    </Col>
+                    {!videosLoaded && (
+                      <div className="loader text-center"></div>
+                    )}
+                    {videos.map((video) => {
+                      return (
+                        <Card body>
+                          <a
+                            href={`https://www.youtube.com/watch?v=${video.key}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <CardImg
+                              top
+                              width="100%"
+                              src={`https://img.youtube.com/vi/${video.key}/mqdefault.jpg`}
+                              alt=""
+                            />
+                          </a>
+
+                          <CardTitle className="text-center">
+                            {video.name}
+                          </CardTitle>
+                        </Card>
+                      );
+                    })}
+
+
+                    {/* {videos.map((video) => {
+                      return (
+                        <div key={video.id} className="col-6 mb-4">
+                          <a
+                            href={`https://www.youtube.com/watch?v=${video.key}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <img
+                              className="card-img-top card-img--height"
+                              src={
+                                imagePath
+                                  ? `https://img.youtube.com/vi/${video.key}/mqdefault.jpg`
+                                  : ""
+                              }
+                              alt=""
+                            />
+                          </a>
+                          <CardTitle className="text-center">
+                            {video.name}
+                          </CardTitle>
+                        </div>
+                      );
+                    })} */}
+
                   </Row>
+                  {/* <Row>
+                    <Col sm="6">
+                      <Card body>
+                        <CardTitle>Special Title Treatment</CardTitle>
+                        <CardText>
+                          With supporting text below as a natural lead-in to
+                          additional content.
+                        </CardText>
+                        <Button>Go somewhere</Button>
+                      </Card>
+                    </Col>
+                    <Col sm="6">
+                      <Card body>
+                        <CardTitle>Special Title Treatment</CardTitle>
+                        <CardText>
+                          With supporting text below as a natural lead-in to
+                          additional content.
+                        </CardText>
+                        <Button>Go somewhere</Button>
+                      </Card>
+                    </Col>
+                  </Row> */}
                 </TabPane>
                 <TabPane tabId="3">
                   <Row>
