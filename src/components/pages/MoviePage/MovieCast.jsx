@@ -1,25 +1,16 @@
 import React, { useState, useEffect } from "react";
 import CallApi from "../../../api/api";
 import {
-  TabContent,
   TabPane,
-  Nav,
-  NavItem,
-  NavLink,
   Card,
   CardImg,
-  //CardSubtitle,
   CardTitle,
-  //CardText,
   Row,
   Col,
 } from "reactstrap";
 
 function MovieCast(props) {
   const movieId = props.match.params.id;
-  const [movie, setMovie] = useState();
-  const [videos, setVideos] = useState([]);
-  const [videosLoaded, setVideosLoaded] = useState(false);
   const [cast, setCast] = useState([]);
   const [castLoaded, setCastLoaded] = useState(false);
 

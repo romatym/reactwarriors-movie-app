@@ -5,20 +5,19 @@ import WatchlistIcon from "../../Movies/WatchlistIcon";
 import MovieDetails from "./MovieDetails";
 import MovieVideo from "./MovieVideo";
 import MovieCast from "./MovieCast";
-import { Route, Link } from "react-router-dom";
+import { Route } from "react-router-dom";
 import {
   TabContent,
-  TabPane,
   Nav,
   NavItem,
   NavLink,
-  Card,
-  CardImg,
-  //CardSubtitle,
-  CardTitle,
-  //CardText,
-  Row,
-  Col,
+  // Card,
+  // CardImg,
+  // CardSubtitle,
+  // CardTitle,
+  // CardText,
+  // Row,
+  // Col,
 } from "reactstrap";
 import classnames from "classnames";
 
@@ -26,10 +25,10 @@ function MoviePage(props) {
   const movieId = props.match.params.id;
   const [activeTab, setActiveTab] = useState("1");
   const [movie, setMovie] = useState();
-  const [videos, setVideos] = useState([]);
-  const [videosLoaded, setVideosLoaded] = useState(false);
-  const [creditsCast, setCreditsCast] = useState([]);
-  const [creditsLoaded, setCreditsLoaded] = useState(false);
+  // const [videos, setVideos] = useState([]);
+  // const [videosLoaded, setVideosLoaded] = useState(false);
+  // const [creditsCast, setCreditsCast] = useState([]);
+  // const [creditsLoaded, setCreditsLoaded] = useState(false);
 
   useEffect(() => {
     CallApi.get(`/movie/${movieId}`, {
@@ -41,28 +40,28 @@ function MoviePage(props) {
     });
   }, [movieId]);
 
-  const uploadVideos = () => {
-    CallApi.get(`/movie/${movieId}/videos`, {
-      params: {
-        language: "ru-RU",
-      },
-    }).then((data) => {
-      setVideos(data.results);
-      setVideosLoaded(true);
-    });
-  };
+  // const uploadVideos = () => {
+  //   CallApi.get(`/movie/${movieId}/videos`, {
+  //     params: {
+  //       language: "ru-RU",
+  //     },
+  //   }).then((data) => {
+  //     setVideos(data.results);
+  //     setVideosLoaded(true);
+  //   });
+  // };
 
-  const uploadCredits = () => {
-    CallApi.get(`/movie/${movieId}/credits`, {
-      params: {
-        language: "ru-RU",
-      },
-    }).then((data) => {
-      setCreditsCast(data.cast);
-      //setCreditsCrew(data.crew);
-      setCreditsLoaded(true);
-    });
-  };
+  // const uploadCredits = () => {
+  //   CallApi.get(`/movie/${movieId}/credits`, {
+  //     params: {
+  //       language: "ru-RU",
+  //     },
+  //   }).then((data) => {
+  //     setCreditsCast(data.cast);
+  //     //setCreditsCrew(data.crew);
+  //     setCreditsLoaded(true);
+  //   });
+  // };
 
   const toggleTab = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
@@ -74,13 +73,6 @@ function MoviePage(props) {
 
   const imagePath = movie.backdrop_path || movie.poster_path;
   const releaseYear = movie.release_date.slice(0, 4);
-  const genresList = movie.genres.map((genre) => {
-    return (
-      <span key={genre.id} className="badge badge-primary badge-pill">
-        {genre.name}
-      </span>
-    );
-  });
 
   return (
     <div className="card mb-3" style={{ maxWidth: "70%" }}>
@@ -139,6 +131,8 @@ function MoviePage(props) {
                 </NavItem>
                 <NavItem>
                   <NavLink
+                    // href={`/movie/${movieId}/cast`}
+                    // innerRef={`/movie/${movieId}/cast`}
                     className={classnames({ active: activeTab === "3" })}
                     onClick={() => {
                       toggleTab("3");
@@ -151,9 +145,9 @@ function MoviePage(props) {
               <TabContent activeTab={activeTab}>
                 <Route exact path="/movie/:id" component={MovieDetails} />
                 {/* <Route exact path="/movie/:id/details" component={MovieDetails} /> */}
-                <Route exact path="/movie/:id" component={MovieVideo} />
+                <Route exact path="/movie/:id/video" component={MovieVideo} />
                 {/* <Route exact path="/movie/:id/video" component={MovieVideo} /> */}
-                <Route exact path="/movie/:id" component={MovieCast} />
+                <Route exact path="/movie/:id/cast" component={MovieCast} />
                 {/* <Route exact path="/movie/:id/cast" component={MovieCast} /> */}
 
                 {/* <TabPane tabId="1">
