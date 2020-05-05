@@ -4,7 +4,7 @@ import Cookies from "universal-cookie";
 import MoviesPage from "./pages/MoviesPage/MoviesPage";
 import MoviePage from "./pages/MoviePage/MoviePage";
 import CallApi from "../api/api";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, Link } from "react-router-dom";
 
 const cookies = new Cookies();
 
@@ -136,7 +136,7 @@ export default class App extends React.Component {
               updateUser={this.updateUser}
               updateSessionId={this.updateSessionId}
             />
-            {/* <Link to="/movie/111">go to movie</Link> */}
+            <Link to="/movie/111">go to movie</Link>
             <Route exact path="/" component={MoviesPage} />
             <Route exact path="/movie/:id" component={MoviePage} />
             {/* <MoviesPage /> */}

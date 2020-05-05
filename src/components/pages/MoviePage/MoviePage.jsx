@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import CallApi from "../../../api/api";
 import FavoriteIcon from "../../Movies/FavoriteIcon";
 import WatchlistIcon from "../../Movies/WatchlistIcon";
-//import MovieItem from "../../Movies/MovieItem";
-// import { AppContext } from "../../App";
+import MovieDetails from "./MovieDetails";
+import MovieVideo from "./MovieVideo";
+import MovieCast from "./MovieCast";
+import { Route, Link } from "react-router-dom";
 import {
   TabContent,
   TabPane,
@@ -27,7 +29,6 @@ function MoviePage(props) {
   const [videos, setVideos] = useState([]);
   const [videosLoaded, setVideosLoaded] = useState(false);
   const [creditsCast, setCreditsCast] = useState([]);
-  //const [creditsCrew, setCreditsCrew] = useState([]);
   const [creditsLoaded, setCreditsLoaded] = useState(false);
 
   useEffect(() => {
@@ -66,9 +67,6 @@ function MoviePage(props) {
   const toggleTab = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
-
-  // console.log("movie", movie);
-  // console.log("videos", videos);
 
   if (!movie) {
     return <div className="loader"></div>;
@@ -134,7 +132,6 @@ function MoviePage(props) {
                     className={classnames({ active: activeTab === "2" })}
                     onClick={() => {
                       toggleTab("2");
-                      uploadVideos();
                     }}
                   >
                     Видео
@@ -145,7 +142,6 @@ function MoviePage(props) {
                     className={classnames({ active: activeTab === "3" })}
                     onClick={() => {
                       toggleTab("3");
-                      uploadCredits();
                     }}
                   >
                     Актеры
@@ -153,7 +149,14 @@ function MoviePage(props) {
                 </NavItem>
               </Nav>
               <TabContent activeTab={activeTab}>
-                <TabPane tabId="1">
+                <Route exact path="/movie/:id" component={MovieDetails} />
+                {/* <Route exact path="/movie/:id/details" component={MovieDetails} /> */}
+                <Route exact path="/movie/:id" component={MovieVideo} />
+                {/* <Route exact path="/movie/:id/video" component={MovieVideo} /> */}
+                <Route exact path="/movie/:id" component={MovieCast} />
+                {/* <Route exact path="/movie/:id/cast" component={MovieCast} /> */}
+
+                {/* <TabPane tabId="1">
                   <Row>
                     <Col sm="12">
                       <table className="table">
@@ -195,6 +198,7 @@ function MoviePage(props) {
                     </Col>
                   </Row>
                 </TabPane>
+                
                 <TabPane tabId="2">
                   <Row>
                     {!videosLoaded && (
@@ -223,12 +227,12 @@ function MoviePage(props) {
                       );
                     })}
                   </Row>
-                </TabPane>
+                </TabPane> 
                 <TabPane tabId="3">
                   <Row>
                     {/* <Col sm="12">
                       <h4>Tab 3 Contents</h4>
-                    </Col> */}
+                    </Col> 
                     {!creditsLoaded && (
                       <div className="loader text-center"></div>
                     )}
@@ -243,10 +247,11 @@ function MoviePage(props) {
                               Актер: {actor.name}
                             </CardTitle>
                             <CardImg
-                              
-                              src={actor.profile_path
-                                ? `https://image.tmdb.org/t/p/w500${actor.profile_path}`
-                                : ""}
+                              src={
+                                actor.profile_path
+                                  ? `https://image.tmdb.org/t/p/w500${actor.profile_path}`
+                                  : ""
+                              }
                               alt=""
                             />
                           </Card>
@@ -254,7 +259,7 @@ function MoviePage(props) {
                       );
                     })}
                   </Row>
-                </TabPane>
+                </TabPane>*/}
               </TabContent>
             </div>
           </div>
