@@ -3,7 +3,7 @@ import CallApi from "../../../api/api";
 import { TabPane, Row, Col } from "reactstrap";
 
 function MovieDetails(props) {
-  const movieId = props.match.params.id;
+  const movieId = props.match.params.movieId;
   const [movie, setMovie] = useState();
 
   useEffect(() => {

@@ -1,16 +1,9 @@
 import React, { useState, useEffect } from "react";
 import CallApi from "../../../api/api";
-import {
-  TabPane,
-  Card,
-  CardImg,
-  CardTitle,
-  Row,
-  Col,
-} from "reactstrap";
+import { TabPane, Card, CardImg, CardTitle, Row, Col } from "reactstrap";
 
 function MovieCast(props) {
-  const movieId = props.match.params.id;
+  const movieId = props.match.params.movieId;
   const [cast, setCast] = useState([]);
   const [castLoaded, setCastLoaded] = useState(false);
 
@@ -28,9 +21,6 @@ function MovieCast(props) {
   return (
     <TabPane tabId="3">
       <Row>
-        <Col sm="12">
-          <h4>Tab 3 Contents</h4>
-        </Col>
         {!castLoaded && <div className="loader text-center"></div>}
         {cast.map((actor) => {
           return (

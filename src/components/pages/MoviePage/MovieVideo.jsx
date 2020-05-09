@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from "react";
 import CallApi from "../../../api/api";
-import {
-  TabPane,
-  Card,
-  CardImg,
-  CardTitle,
-  Row,
-} from "reactstrap";
+import { TabPane, Card, CardTitle, Row } from "reactstrap";
 
 function MovieVideo(props) {
-  const movieId = props.match.params.id;
+  const movieId = props.match.params.movieId;
   const [videos, setVideos] = useState([]);
   const [videosLoaded, setVideosLoaded] = useState(false);
 
@@ -24,15 +18,20 @@ function MovieVideo(props) {
     });
   }, [movieId]);
 
-
   return (
     <TabPane tabId="2">
       <Row>
         {!videosLoaded && <div className="loader text-center"></div>}
         {videos.map((video) => {
           return (
-            <Card body>
-              <a
+            <Card body className="video-container">
+              <iframe
+                title={video.name}
+                className="video"
+                frameborder="0"
+                src={`https://www.youtube.com/embed/${video.key}?controls=0`}
+              ></iframe>
+              {/* <a
                 href={`https://www.youtube.com/watch?v=${video.key}`}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -43,7 +42,7 @@ function MovieVideo(props) {
                   src={`https://img.youtube.com/vi/${video.key}/mqdefault.jpg`}
                   alt=""
                 />
-              </a>
+              </a> */}
 
               <CardTitle className="text-center">{video.name}</CardTitle>
             </Card>
