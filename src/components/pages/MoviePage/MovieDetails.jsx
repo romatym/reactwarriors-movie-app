@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CallApi from "../../../api/api";
-import { TabPane, Row, Col } from "reactstrap";
+import { Row, Col } from "reactstrap";
 
 function MovieDetails(props) {
   const movieId = props.match.params.movieId;
@@ -29,48 +29,46 @@ function MovieDetails(props) {
   });
 
   return (
-    <TabPane tabId="1">
-      <Row>
-        <Col sm="12">
-          <table className="table">
-            <tbody>
-              <tr>
-                <th>Дата выхода</th>
-                <td>{movie.release_date}</td>
-              </tr>
-              <tr>
-                <th>Длительность</th>
-                <td>{movie.runtime} минут</td>
-              </tr>
-              <tr>
-                <th>Жанры</th>
-                <td>{genresList}</td>
-              </tr>
-              <tr>
-                <th>Бюджет</th>
-                <td>{movie.budget} $</td>
-              </tr>
-              <tr>
-                <th>Сборы</th>
-                <td>{movie.revenue} $</td>
-              </tr>
-              <tr>
-                <th>Популярность</th>
-                <td>{movie.popularity}</td>
-              </tr>
-              <tr>
-                <th>Голосов</th>
-                <td>{movie.vote_count}</td>
-              </tr>{" "}
-              <tr>
-                <th>Статус</th>
-                <td>{movie.status}</td>
-              </tr>
-            </tbody>
-          </table>
-        </Col>
-      </Row>
-    </TabPane>
+    <Row>
+      <Col sm="12">
+        <table className="table">
+          <tbody>
+            <tr>
+              <th>Дата выхода</th>
+              <td>{movie.release_date}</td>
+            </tr>
+            <tr>
+              <th>Длительность</th>
+              <td>{movie.runtime} минут</td>
+            </tr>
+            <tr>
+              <th>Жанры</th>
+              <td>{genresList}</td>
+            </tr>
+            <tr>
+              <th>Бюджет</th>
+              <td>{movie.budget} $</td>
+            </tr>
+            <tr>
+              <th>Сборы</th>
+              <td>{movie.revenue} $</td>
+            </tr>
+            <tr>
+              <th>Популярность</th>
+              <td>{movie.popularity}</td>
+            </tr>
+            <tr>
+              <th>Голосов</th>
+              <td>{movie.vote_count}</td>
+            </tr>
+            <tr>
+              <th>Статус</th>
+              <td>{movie.status}</td>
+            </tr>
+          </tbody>
+        </table>
+      </Col>
+    </Row>
   );
 }
 

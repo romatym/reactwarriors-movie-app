@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CallApi from "../../../api/api";
-import { TabPane, Card, CardImg, CardTitle, Row, Col } from "reactstrap";
+import { Card, CardImg, CardTitle, Row, Col } from "reactstrap";
 
 function MovieCast(props) {
   const movieId = props.match.params.movieId;
@@ -19,33 +19,29 @@ function MovieCast(props) {
   }, [movieId]);
 
   return (
-    <TabPane tabId="3">
-      <Row>
-        {!castLoaded && <div className="loader text-center"></div>}
-        {cast.map((actor) => {
-          return (
-            <Col sm="4" key={actor.id}>
-              <Card body className="cast-img--height">
-                <CardTitle className="text-center">
-                  Роль: {actor.character}
-                </CardTitle>
-                <CardTitle className="text-center">
-                  Актер: {actor.name}
-                </CardTitle>
-                <CardImg
-                  src={
-                    actor.profile_path
-                      ? `https://image.tmdb.org/t/p/w500${actor.profile_path}`
-                      : ""
-                  }
-                  alt=""
-                />
-              </Card>
-            </Col>
-          );
-        })}
-      </Row>
-    </TabPane>
+    <Row>
+      {!castLoaded && <div className="loader text-center"></div>}
+      {cast.map((actor) => {
+        return (
+          <Col sm="4" key={actor.id}>
+            <Card body className="cast-img--height">
+              <CardTitle className="text-center">
+                Роль: {actor.character}
+              </CardTitle>
+              <CardTitle className="text-center">Актер: {actor.name}</CardTitle>
+              <CardImg
+                src={
+                  actor.profile_path
+                    ? `https://image.tmdb.org/t/p/w500${actor.profile_path}`
+                    : ""
+                }
+                alt=""
+              />
+            </Card>
+          </Col>
+        );
+      })}
+    </Row>
   );
 }
 
