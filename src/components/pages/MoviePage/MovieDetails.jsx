@@ -30,41 +30,50 @@ function MovieDetails(props) {
 
   return (
     <Row>
-      <Col sm="12">
+      <Col
+      // sm="12"
+      >
         <table className="table">
           <tbody>
-            <tr>
-              <th>Дата выхода</th>
-              <td>{movie.release_date}</td>
-            </tr>
-            <tr>
-              <th>Длительность</th>
-              <td>{movie.runtime} минут</td>
-            </tr>
             <tr>
               <th>Жанры</th>
               <td>{genresList}</td>
             </tr>
             <tr>
-              <th>Бюджет</th>
-              <td>{movie.budget} $</td>
+              <th>Статус</th>
+              <td>{movie.status}</td>
+              <th>Дата выхода</th>
+              <td>{movie.release_date}</td>
             </tr>
+            {/* <tr>
+              <th>Длительность</th>
+              <td>{movie.runtime} минут</td>
+            </tr> */}
             <tr>
               <th>Сборы</th>
               <td>{movie.revenue} $</td>
+              <th>Бюджет</th>
+              <td>{movie.budget} $</td>
             </tr>
-            <tr>
+            {/* <tr>
+              <th>Бюджет</th>
+              <td>{movie.budget} $</td>
+            </tr> */}
+
+            {/* <tr>
               <th>Популярность</th>
               <td>{movie.popularity}</td>
-            </tr>
+            </tr> */}
             <tr>
               <th>Голосов</th>
               <td>{movie.vote_count}</td>
+              <th>Популярность</th>
+              <td>{movie.popularity}</td>
             </tr>
-            <tr>
+            {/* <tr>
               <th>Статус</th>
               <td>{movie.status}</td>
-            </tr>
+            </tr> */}
           </tbody>
         </table>
       </Col>

@@ -4,14 +4,11 @@ import PropTypes from "prop-types";
 import MoviesHOC from "./MoviesHOC";
 
 const MoviesList = ({ movies, loaded }) => {
-  // favorite = favorite || [];
-  // watchlist = watchlist || [];
-
   return (
     <div className="row">
       {!loaded && <div className="loader"></div>}
 
-      {movies.map(item => {
+      {movies.map((item) => {
         return (
           <div key={item.id} className="col-6 mb-4">
             <MovieItem item={item} />

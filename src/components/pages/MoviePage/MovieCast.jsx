@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from "react";
 import CallApi from "../../../api/api";
-import { Card, CardImg, CardTitle, Row, Col } from "reactstrap";
+// import NoPhoto from "../../../images/no photo.png";
+import {
+  Card,
+  CardImg,
+  CardBody,
+  CardFooter,
+  CardTitle,
+  Row,
+  Col,
+} from "reactstrap";
 
 function MovieCast(props) {
   const movieId = props.match.params.movieId;
@@ -18,25 +27,41 @@ function MovieCast(props) {
     });
   }, [movieId]);
 
+  // console.log("NoPhoto", NoPhoto);
+
   return (
-    <Row>
+    <Row 
+    // className="no-gutters"
+    >
       {!castLoaded && <div className="loader text-center"></div>}
       {cast.map((actor) => {
+        // console.log("actor.profile_path", actor.profile_path);
+
         return (
-          <Col sm="4" key={actor.id}>
-            <Card body className="cast-img--height">
-              <CardTitle className="text-center">
-                Роль: {actor.character}
-              </CardTitle>
-              <CardTitle className="text-center">Актер: {actor.name}</CardTitle>
+          <Col className="col-sm" 
+          // sm="3" 
+          key={actor.id}>
+            <Card className="cast-card">
               <CardImg
+              className="cast-img--height"
                 src={
                   actor.profile_path
                     ? `https://image.tmdb.org/t/p/w500${actor.profile_path}`
-                    : ""
+                    // : `https://century21agcoplus.com/wp-content/uploads/2019/10/no-photo-available-male.jpg`
+                    // : { NoPhoto }
+                    : `/images/no photo.png`
                 }
                 alt=""
               />
+              <CardBody className="cast-text--height">
+                <CardTitle className="text-center">{actor.character}</CardTitle>
+                <CardTitle
+                  className="text-center"
+                  style={{ fontWeight: "bold" }}
+                >
+                  {actor.name}
+                </CardTitle>
+              </CardBody>
             </Card>
           </Col>
         );

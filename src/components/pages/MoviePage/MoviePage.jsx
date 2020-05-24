@@ -5,7 +5,12 @@ import WatchlistIcon from "../../Movies/WatchlistIcon";
 import MovieDetails from "./MovieDetails";
 import MovieVideo from "./MovieVideo";
 import MovieCast from "./MovieCast";
-import { Route, NavLink as NavLinkRouter, Redirect, Switch } from "react-router-dom";
+import {
+  Route,
+  NavLink as NavLinkRouter,
+  Redirect,
+  Switch,
+} from "react-router-dom";
 import { TabPane, Nav, NavItem, NavLink } from "reactstrap";
 
 function MoviePage(props) {
@@ -26,19 +31,22 @@ function MoviePage(props) {
     });
   }, [movieId]);
 
-  // const toggleTab = (tab) => {
-  //   if (activeTab !== tab) setActiveTab(tab);
-  // };
-
   if (isLoading) {
     return <div className="loader" />;
   }
 
   const imagePath = movie.backdrop_path || movie.poster_path;
   const releaseYear = movie.release_date && movie.release_date.slice(0, 4);
+  const genresList = movie.genres.map((genre) => {
+    return (
+      <span key={genre.id} className="badge badge-primary badge-pill">
+        {genre.name}
+      </span>
+    );
+  });
 
   return (
-    <div className="card mb-3" style={{ maxWidth: "70%" }}>
+    <div className="container">
       <div className="row no-gutters">
         <div className="col-md-4">
           <img
@@ -63,44 +71,93 @@ function MoviePage(props) {
             <h5 className="card-text">Обзор</h5>
             <p className="card-text">{movie.overview}</p>
             <div className="d-flex justify-content-between">
-              <div className="card-text">Рейтинг: {movie.vote_average}</div>
+              {/* <div className="card-text">Рейтинг: {movie.vote_average}</div> */}
               <div>
                 <FavoriteIcon item={movie} />
                 <WatchlistIcon item={movie} />
               </div>
             </div>
 
-            <div className="top-indent">
-              <Nav tabs>
-                <NavItem>
-                  <NavLink tag={NavLinkRouter} to={`/movie/${movieId}/details`}>
-                    Детали
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={NavLinkRouter} to={`/movie/${movieId}/video`}>
-                    Видео
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={NavLinkRouter} to={`/movie/${movieId}/cast`}>
-                    Актеры
-                  </NavLink>
-                </NavItem>
-              </Nav>
-              <TabPane>
-                <Switch>
-                  <Route
-                    path="/movie/:movieId/details"
-                    component={MovieDetails}
-                  />
-                  <Route path="/movie/:movieId/video" component={MovieVideo} />
-                  <Route path="/movie/:movieId/cast" component={MovieCast} />
-                  <Redirect to={`/movie/${movieId}/details`} />
-                </Switch>
-              </TabPane>
-            </div>
+            {/* <div className="card-text">Длительность: {movie.runtime} минут</div> */}
+            <table className="table top-indent">
+              <tbody>
+                <tr>
+                  <th>Жанры</th>
+                  <td>{genresList}</td>
+                </tr>
+                <tr>
+                  <th>Рейтинг:</th>
+                  <td>{movie.vote_average}</td>
+                  <th>Длительность</th>
+                  <td>{movie.runtime}</td>
+                </tr>
+                <tr>
+                  <th>Статус</th>
+                  <td>{movie.status}</td>
+                  <th>Дата выхода</th>
+                  <td>{movie.release_date}</td>
+                </tr>
+                {/* <tr>
+              <th>Длительность</th>
+              <td>{movie.runtime} минут</td>
+            </tr> */}
+                <tr>
+                  <th>Сборы</th>
+                  <td>{movie.revenue} $</td>
+                  <th>Бюджет</th>
+                  <td>{movie.budget} $</td>
+                </tr>
+                {/* <tr>
+              <th>Бюджет</th>
+              <td>{movie.budget} $</td>
+            </tr> */}
+
+                {/* <tr>
+              <th>Популярность</th>
+              <td>{movie.popularity}</td>
+            </tr> */}
+                <tr>
+                  <th>Голосов</th>
+                  <td>{movie.vote_count}</td>
+                  <th>Популярность</th>
+                  <td>{movie.popularity}</td>
+                </tr>
+                {/* <tr>
+              <th>Статус</th>
+              <td>{movie.status}</td>
+            </tr> */}
+              </tbody>
+            </table>
           </div>
+        </div>
+
+        <div className="top-indent">
+          <Nav tabs>
+            {/* <NavItem>
+              <NavLink tag={NavLinkRouter} to={`/movie/${movieId}/details`}>
+                Детали
+              </NavLink>
+            </NavItem> */}
+            <NavItem>
+              <NavLink tag={NavLinkRouter} to={`/movie/${movieId}/cast`}>
+                Актеры
+              </NavLink>
+            </NavItem>            
+            <NavItem>
+              <NavLink tag={NavLinkRouter} to={`/movie/${movieId}/video`}>
+                Видео
+              </NavLink>
+            </NavItem>
+
+          </Nav>
+          <TabPane>
+            <Switch>
+              {/* <Route path="/movie/:movieId/details" component={MovieDetails} /> */}
+              <Route path="/movie/:movieId/video" component={MovieVideo} />
+              <Route path="/movie/:movieId/cast" component={MovieCast} />
+              <Redirect to={`/movie/${movieId}/cast`} />
+            </Switch>
+          </TabPane>
         </div>
       </div>
     </div>
