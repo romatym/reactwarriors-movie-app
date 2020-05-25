@@ -22,7 +22,6 @@ export default class Login extends React.Component {
       <div>
         <AppContext.Consumer>
           {context => {
-            //console.log("context", context);
 
             return (
               <div>

@@ -71,19 +71,17 @@ function MoviePage(props) {
             <h5 className="card-text">Обзор</h5>
             <p className="card-text">{movie.overview}</p>
             <div className="d-flex justify-content-between">
-              {/* <div className="card-text">Рейтинг: {movie.vote_average}</div> */}
               <div>
                 <FavoriteIcon item={movie} />
                 <WatchlistIcon item={movie} />
               </div>
             </div>
 
-            {/* <div className="card-text">Длительность: {movie.runtime} минут</div> */}
-            <table className="table top-indent">
+            <table className="table top-indent " style={{ width: "100%" }}>
               <tbody>
                 <tr>
-                  <th>Жанры</th>
-                  <td>{genresList}</td>
+                  <th>Жанры:</th>
+                  <td colSpan="2">{genresList}</td>
                 </tr>
                 <tr>
                   <th>Рейтинг:</th>
@@ -97,35 +95,18 @@ function MoviePage(props) {
                   <th>Дата выхода</th>
                   <td>{movie.release_date}</td>
                 </tr>
-                {/* <tr>
-              <th>Длительность</th>
-              <td>{movie.runtime} минут</td>
-            </tr> */}
                 <tr>
                   <th>Сборы</th>
                   <td>{movie.revenue} $</td>
                   <th>Бюджет</th>
                   <td>{movie.budget} $</td>
                 </tr>
-                {/* <tr>
-              <th>Бюджет</th>
-              <td>{movie.budget} $</td>
-            </tr> */}
-
-                {/* <tr>
-              <th>Популярность</th>
-              <td>{movie.popularity}</td>
-            </tr> */}
                 <tr>
                   <th>Голосов</th>
                   <td>{movie.vote_count}</td>
                   <th>Популярность</th>
                   <td>{movie.popularity}</td>
                 </tr>
-                {/* <tr>
-              <th>Статус</th>
-              <td>{movie.status}</td>
-            </tr> */}
               </tbody>
             </table>
           </div>
@@ -142,15 +123,14 @@ function MoviePage(props) {
               <NavLink tag={NavLinkRouter} to={`/movie/${movieId}/cast`}>
                 Актеры
               </NavLink>
-            </NavItem>            
+            </NavItem>
             <NavItem>
               <NavLink tag={NavLinkRouter} to={`/movie/${movieId}/video`}>
                 Видео
               </NavLink>
             </NavItem>
-
           </Nav>
-          <TabPane>
+          <TabPane style={{ width: "100%" }}>
             <Switch>
               {/* <Route path="/movie/:movieId/details" component={MovieDetails} /> */}
               <Route path="/movie/:movieId/video" component={MovieVideo} />

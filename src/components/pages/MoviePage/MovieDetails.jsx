@@ -33,11 +33,17 @@ function MovieDetails(props) {
       <Col
       // sm="12"
       >
-        <table className="table">
+        <table className="table top-indent">
           <tbody>
             <tr>
-              <th>Жанры</th>
-              <td>{genresList}</td>
+              <th>Жанры:</th>
+              <td colspan="2">{genresList}</td>
+            </tr>
+            <tr>
+              <th>Рейтинг:</th>
+              <td>{movie.vote_average}</td>
+              <th>Длительность</th>
+              <td>{movie.runtime}</td>
             </tr>
             <tr>
               <th>Статус</th>
@@ -45,35 +51,18 @@ function MovieDetails(props) {
               <th>Дата выхода</th>
               <td>{movie.release_date}</td>
             </tr>
-            {/* <tr>
-              <th>Длительность</th>
-              <td>{movie.runtime} минут</td>
-            </tr> */}
             <tr>
               <th>Сборы</th>
               <td>{movie.revenue} $</td>
               <th>Бюджет</th>
               <td>{movie.budget} $</td>
             </tr>
-            {/* <tr>
-              <th>Бюджет</th>
-              <td>{movie.budget} $</td>
-            </tr> */}
-
-            {/* <tr>
-              <th>Популярность</th>
-              <td>{movie.popularity}</td>
-            </tr> */}
             <tr>
               <th>Голосов</th>
               <td>{movie.vote_count}</td>
               <th>Популярность</th>
               <td>{movie.popularity}</td>
             </tr>
-            {/* <tr>
-              <th>Статус</th>
-              <td>{movie.status}</td>
-            </tr> */}
           </tbody>
         </table>
       </Col>

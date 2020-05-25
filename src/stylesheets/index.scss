@@ -54,6 +54,7 @@ input.invalid {
 
 .top-indent {
   margin-top: 20px;
+  width: 100%;
 }
 
 .cast-img--height {
@@ -88,8 +89,8 @@ input.invalid {
 .video-container {
   position: relative;
   width: 100%;
-  height: 0;
-  padding-bottom: 56.25%;
+  height: 100%;
+  //padding-bottom: 56.25%;
 }
 .video {
   position: absolute;
