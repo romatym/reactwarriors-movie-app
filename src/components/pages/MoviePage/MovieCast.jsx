@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import CallApi from "../../../api/api";
-// import NoPhoto from "../../../images/no photo.png";
 import {
   Card,
   CardImg,
   CardBody,
-  CardFooter,
   CardTitle,
   Row,
   Col,
@@ -27,38 +25,29 @@ function MovieCast(props) {
     });
   }, [movieId]);
 
-  // console.log("NoPhoto", NoPhoto);
+  if (!castLoaded) {
+    return <div className="loader text-center"/>;
+  }
 
   return (
-    <Row 
-    // className="no-gutters"
-    >
-      {!castLoaded && <div className="loader text-center"></div>}
+    <Row>
+      {/* {!castLoaded && <div className="loader text-center"></div>} */}
       {cast.map((actor) => {
-        // console.log("actor.profile_path", actor.profile_path);
-
         return (
-          <Col className="col-sm" 
-          // sm="3" 
-          key={actor.id}>
+          <Col className="col-sm" key={actor.id}>
             <Card className="cast-card">
               <CardImg
-              className="cast-img--height"
+                className="cast-img--height"
                 src={
                   actor.profile_path
                     ? `https://image.tmdb.org/t/p/w500${actor.profile_path}`
-                    // : `https://century21agcoplus.com/wp-content/uploads/2019/10/no-photo-available-male.jpg`
-                    // : { NoPhoto }
                     : `/images/no photo.png`
                 }
                 alt=""
               />
               <CardBody className="cast-text--height">
                 <CardTitle className="text-center">{actor.character}</CardTitle>
-                <CardTitle
-                  className="text-center"
-                  style={{ fontWeight: "bold" }}
-                >
+                <CardTitle className="text-center cast-text--bold">
                   {actor.name}
                 </CardTitle>
               </CardBody>

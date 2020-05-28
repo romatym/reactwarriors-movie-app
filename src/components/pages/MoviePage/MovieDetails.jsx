@@ -1,20 +1,8 @@
-import React, { useState, useEffect } from "react";
-import CallApi from "../../../api/api";
+import React from "react";
 import { Row, Col } from "reactstrap";
 
 function MovieDetails(props) {
-  const movieId = props.match.params.movieId;
-  const [movie, setMovie] = useState();
-
-  useEffect(() => {
-    CallApi.get(`/movie/${movieId}`, {
-      params: {
-        language: "ru-RU",
-      },
-    }).then((data) => {
-      setMovie(data);
-    });
-  }, [movieId]);
+  const {movie} = props;
 
   if (!movie) {
     return <div className="loader"></div>;
@@ -30,14 +18,12 @@ function MovieDetails(props) {
 
   return (
     <Row>
-      <Col
-      // sm="12"
-      >
-        <table className="table top-indent">
+      <Col>
+        <table className="table top-indent ">
           <tbody>
             <tr>
               <th>Жанры:</th>
-              <td colspan="2">{genresList}</td>
+              <td colSpan="3">{genresList}</td>
             </tr>
             <tr>
               <th>Рейтинг:</th>
