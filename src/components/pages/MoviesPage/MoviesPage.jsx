@@ -17,7 +17,7 @@ export default class MoviesPage extends React.Component {
         page: 1
       },
       totalPages: 1,
-      showLoginModal: false
+      isAuth: false
     };
 
     this.state = this.initialState;
@@ -93,7 +93,7 @@ export default class MoviesPage extends React.Component {
 
   toggleShowLogin = () => {
     this.setState(prevState => ({
-      showLoginModal: !prevState.showLoginModal
+      isAuth: !prevState.isAuth
     }));
   };
 

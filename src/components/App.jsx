@@ -18,7 +18,7 @@ export default class App extends React.Component {
       watchlist: [],
       user: null,
       session_id: cookies.get("session_id") || null,
-      showLoginModal: false,
+      isAuth: false,
     };
 
     this.state = this.initialState;
@@ -72,7 +72,7 @@ export default class App extends React.Component {
 
   toggleShowLogin = () => {
     this.setState((prevState) => ({
-      showLoginModal: !prevState.showLoginModal,
+      isAuth: !prevState.isAuth,
     }));
   };
 
@@ -110,7 +110,7 @@ export default class App extends React.Component {
       favorite,
       watchlist,
       session_id,
-      showLoginModal,
+      isAuth,
     } = this.state;
 
     return (
@@ -124,7 +124,7 @@ export default class App extends React.Component {
             updateUser: this.updateUser,
             updateSessionId: this.updateSessionId,
             onLogOut: this.onLogOut,
-            showLoginModal: showLoginModal,
+            isAuth: isAuth,
             toggleShowLogin: this.toggleShowLogin,
             getFavoriteMovies: this.getFavoriteMovies,
             getWatchlistMovies: this.getWatchlistMovies,
