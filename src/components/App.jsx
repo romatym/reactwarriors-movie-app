@@ -5,7 +5,10 @@ import MoviesPage from "./pages/MoviesPage/MoviesPage";
 import MoviePage from "./pages/MoviePage/MoviePage";
 import CallApi from "../api/api";
 import { BrowserRouter, Route } from "react-router-dom";
+import { actionCreatorUpdateAuth } from "../";
+//import { createStore } from "redux";
 
+//const store = createStore(reducerApp);
 const cookies = new Cookies();
 
 export const AppContext = React.createContext();
@@ -16,23 +19,30 @@ export default class App extends React.Component {
     this.initialState = {
       favorite: [],
       watchlist: [],
-      user: null,
-      session_id: cookies.get("session_id") || null,
-      isAuth: false,
+      showModal: false,
+      // user: null,
+      // session_id: cookies.get("session_id") || null,
+      // isAuth: false,
     };
 
     this.state = this.initialState;
   }
 
   componentDidMount() {
-    const { session_id } = this.state;
-    if (session_id) {
-      CallApi.get("/account", {
-        params: { session_id },
-      }).then((user) => {
-        this.updateUser(user, session_id);
-      });
-    }
+
+    this.props.store.subscribe(() => {
+      console.log("change", this.props.store.getState());
+    });
+
+    this.forceUpdate();
+    // const { session_id } = this.state;
+    // if (session_id) {
+    //   CallApi.get("/account", {
+    //     params: { session_id },
+    //   }).then((user) => {
+    //     this.updateAuth(user, session_id);
+    //   });
+    // }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -44,20 +54,25 @@ export default class App extends React.Component {
     }
   }
 
-  updateUser = (user) => {
-    this.setState({
-      user,
-    });
-  };
+  updateAuth = (user, session_id) => {
+    this.props.store.dispatch(
+      actionCreatorUpdateAuth({
+        user,
+        session_id,
+      })
+    );
 
-  updateSessionId = (session_id) => {
-    cookies.set("session_id", session_id, {
-      path: "/",
-      maxAge: 2592000,
-    });
-    this.setState({
-      session_id,
-    });
+    console.log("updateAuth", user, session_id);
+
+    // cookies.set("session_id", session_id, {
+    //   path: "/",
+    //   maxAge: 2592000,
+    // });
+    // this.setState({
+    //   user,
+    //   session_id,
+    //   isAuth: true
+    // });
   };
 
   onLogOut = () => {
@@ -72,7 +87,8 @@ export default class App extends React.Component {
 
   toggleShowLogin = () => {
     this.setState((prevState) => ({
-      isAuth: !prevState.isAuth,
+      //isAuth: !prevState.isAuth,
+      showModal: !prevState.showModal
     }));
   };
 
@@ -106,12 +122,18 @@ export default class App extends React.Component {
 
   render() {
     const {
-      user,
       favorite,
       watchlist,
-      session_id,
-      isAuth,
+      // user,
+      // session_id,
+      // isAuth,
+      showModal,
     } = this.state;
+
+    const { user, session_id, isAuth } = this.props.store.getState();
+
+    // console.log("this.props.store.getState()", this.props.store.getState());
+    // console.log("user", user);
 
     return (
       <BrowserRouter>
@@ -121,10 +143,12 @@ export default class App extends React.Component {
             session_id: session_id,
             favorite: favorite,
             watchlist: watchlist,
-            updateUser: this.updateUser,
-            updateSessionId: this.updateSessionId,
-            onLogOut: this.onLogOut,
+            updateAuth: this.updateAuth,
+            // updateUser: this.updateUser,
+            // updateSessionId: this.updateSessionId,
             isAuth: isAuth,
+            onLogOut: this.onLogOut,
+            showModal: showModal,
             toggleShowLogin: this.toggleShowLogin,
             getFavoriteMovies: this.getFavoriteMovies,
             getWatchlistMovies: this.getWatchlistMovies,
@@ -133,8 +157,8 @@ export default class App extends React.Component {
           <div>
             <Header
               user={user}
-              updateUser={this.updateUser}
-              updateSessionId={this.updateSessionId}
+              updateAuth={this.updateAuth}
+              //updateSessionId={this.updateSessionId}
             />
             <Route exact path="/" component={MoviesPage} />
             <Route path="/movie/:id" component={MoviePage} />

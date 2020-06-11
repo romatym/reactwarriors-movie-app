@@ -14,12 +14,14 @@ class UserMenu extends Component {
   };
 
   toggleDropdown = () => {
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       dropdownOpen: !prevState.dropdownOpen,
     }));
   };
 
   handleLogOut = () => {
+    console.log("delete session_id", this.props.session_id);
+
     CallApi.delete("/authentication/session", {
       body: {
         session_id: this.props.session_id,

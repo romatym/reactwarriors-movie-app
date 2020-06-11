@@ -34,7 +34,7 @@ export default class Login extends React.Component {
                 </button>
 
                 <Modal
-                  isOpen={context.isAuth}
+                  isOpen={context.showModal}
                   toggle={context.toggleShowLogin}
                   {...this.props}
                 >
