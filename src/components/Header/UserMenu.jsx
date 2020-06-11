@@ -20,7 +20,7 @@ class UserMenu extends Component {
   };
 
   handleLogOut = () => {
-    console.log("delete session_id", this.props.session_id);
+    //console.log("delete session_id", this.props.session_id);
 
     CallApi.delete("/authentication/session", {
       body: {

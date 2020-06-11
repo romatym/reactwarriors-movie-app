@@ -5,10 +5,8 @@ import MoviesPage from "./pages/MoviesPage/MoviesPage";
 import MoviePage from "./pages/MoviePage/MoviePage";
 import CallApi from "../api/api";
 import { BrowserRouter, Route } from "react-router-dom";
-import { actionCreatorUpdateAuth } from "../";
-//import { createStore } from "redux";
+import { actionCreatorUpdateAuth, actionCreatorLogout } from "../actions/actions";
 
-//const store = createStore(reducerApp);
 const cookies = new Cookies();
 
 export const AppContext = React.createContext();
@@ -29,20 +27,21 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
+    const { store } = this.props;
+    const { session_id } = store.getState();
 
-    this.props.store.subscribe(() => {
-      console.log("change", this.props.store.getState());
+    store.subscribe(() => {
+      console.log("change", store.getState());
+      this.forceUpdate();
     });
 
-    this.forceUpdate();
-    // const { session_id } = this.state;
-    // if (session_id) {
-    //   CallApi.get("/account", {
-    //     params: { session_id },
-    //   }).then((user) => {
-    //     this.updateAuth(user, session_id);
-    //   });
-    // }
+    if (session_id) {
+      CallApi.get("/account", {
+        params: { session_id },
+      }).then((user) => {
+        this.updateAuth(user, session_id);
+      });
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -76,19 +75,26 @@ export default class App extends React.Component {
   };
 
   onLogOut = () => {
-    cookies.remove("session_id");
-    this.setState({
-      session_id: null,
-      user: null,
-      favorite: [],
-      watchlist: [],
-    });
+    this.props.store.dispatch(actionCreatorLogout());
+
+    console.log("onLogOut getState", this.props.store.getState());
+
+    this.forceUpdate();
+
+    // cookies.remove("session_id");
+    // this.setState({
+    //   session_id: null,
+    //   user: null,
+    //   isAuth: false,
+    //   favorite: [],
+    //   watchlist: [],
+    // });
   };
 
   toggleShowLogin = () => {
     this.setState((prevState) => ({
       //isAuth: !prevState.isAuth,
-      showModal: !prevState.showModal
+      showModal: !prevState.showModal,
     }));
   };
 
@@ -133,7 +139,7 @@ export default class App extends React.Component {
     const { user, session_id, isAuth } = this.props.store.getState();
 
     // console.log("this.props.store.getState()", this.props.store.getState());
-    // console.log("user", user);
+    console.log("render user", user);
 
     return (
       <BrowserRouter>
