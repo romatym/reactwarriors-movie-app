@@ -1,16 +1,19 @@
 import React from "react";
 import Header from "./Header/Header";
-import Cookies from "universal-cookie";
+//import Cookies from "universal-cookie";
 import MoviesPage from "./pages/MoviesPage/MoviesPage";
 import MoviePage from "./pages/MoviePage/MoviePage";
 import CallApi from "../api/api";
 import { BrowserRouter, Route } from "react-router-dom";
-import { actionCreatorUpdateAuth, actionCreatorLogout } from "../actions/actions";
-
-const cookies = new Cookies();
+import {
+  actionCreatorUpdateAuth,
+  actionCreatorLogout,
+} from "../actions/actions";
+import { connect } from "react-redux";
+//const cookies = new Cookies();
 
 export const AppContext = React.createContext();
-export default class App extends React.Component {
+class App extends React.Component {
   constructor() {
     super();
 
@@ -27,19 +30,13 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    const { store } = this.props;
-    const { session_id } = store.getState();
-
-    store.subscribe(() => {
-      console.log("change", store.getState());
-      this.forceUpdate();
-    });
-
+    const { session_id } = this.props;
+    
     if (session_id) {
       CallApi.get("/account", {
         params: { session_id },
       }).then((user) => {
-        this.updateAuth(user, session_id);
+        this.props.updateAuth(user, session_id);
       });
     }
   }
@@ -53,43 +50,43 @@ export default class App extends React.Component {
     }
   }
 
-  updateAuth = (user, session_id) => {
-    this.props.store.dispatch(
-      actionCreatorUpdateAuth({
-        user,
-        session_id,
-      })
-    );
+  // updateAuth = (user, session_id) => {
+  //   this.props.store.dispatch(
+  //     actionCreatorUpdateAuth({
+  //       user,
+  //       session_id,
+  //     })
+  //   );
 
-    console.log("updateAuth", user, session_id);
+  //   console.log("updateAuth", user, session_id);
 
-    // cookies.set("session_id", session_id, {
-    //   path: "/",
-    //   maxAge: 2592000,
-    // });
-    // this.setState({
-    //   user,
-    //   session_id,
-    //   isAuth: true
-    // });
-  };
+  //   // cookies.set("session_id", session_id, {
+  //   //   path: "/",
+  //   //   maxAge: 2592000,
+  //   // });
+  //   // this.setState({
+  //   //   user,
+  //   //   session_id,
+  //   //   isAuth: true
+  //   // });
+  // };
 
-  onLogOut = () => {
-    this.props.store.dispatch(actionCreatorLogout());
+  // onLogOut = () => {
+  //   this.props.store.dispatch(actionCreatorLogout());
 
-    console.log("onLogOut getState", this.props.store.getState());
+  //   console.log("onLogOut getState", this.props.store.getState());
 
-    this.forceUpdate();
+  //   this.forceUpdate();
 
-    // cookies.remove("session_id");
-    // this.setState({
-    //   session_id: null,
-    //   user: null,
-    //   isAuth: false,
-    //   favorite: [],
-    //   watchlist: [],
-    // });
-  };
+  //   // cookies.remove("session_id");
+  //   // this.setState({
+  //   //   session_id: null,
+  //   //   user: null,
+  //   //   isAuth: false,
+  //   //   favorite: [],
+  //   //   watchlist: [],
+  //   // });
+  // };
 
   toggleShowLogin = () => {
     this.setState((prevState) => ({
@@ -136,7 +133,7 @@ export default class App extends React.Component {
       showModal,
     } = this.state;
 
-    const { user, session_id, isAuth } = this.props.store.getState();
+    const { user, session_id, isAuth, updateAuth, onLogOut } = this.props;
 
     // console.log("this.props.store.getState()", this.props.store.getState());
     console.log("render user", user);
@@ -149,11 +146,13 @@ export default class App extends React.Component {
             session_id: session_id,
             favorite: favorite,
             watchlist: watchlist,
-            updateAuth: this.updateAuth,
+            updateAuth,
+            onLogOut,
+            // updateAuth: this.updateAuth,
             // updateUser: this.updateUser,
             // updateSessionId: this.updateSessionId,
             isAuth: isAuth,
-            onLogOut: this.onLogOut,
+            // onLogOut: this.onLogOut,
             showModal: showModal,
             toggleShowLogin: this.toggleShowLogin,
             getFavoriteMovies: this.getFavoriteMovies,
@@ -174,3 +173,20 @@ export default class App extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+    session_id: state.session_id,
+    isAuth: state.isAuth,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateAuth: (user, session_id) => dispatch(actionCreatorUpdateAuth()),
+    onLogOut: () => dispatch(actionCreatorLogout()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
