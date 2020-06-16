@@ -12,7 +12,6 @@ const initialState = {
 };
 
 const reducerApp = (state = initialState, action) => {
-  //console.log("reducerApp", state, action);
   switch (action.type) {
     case "UPDATEAUTH":
       cookies.set("session_id", action.payload.session_id, {

@@ -31,7 +31,7 @@ class App extends React.Component {
 
   componentDidMount() {
     const { session_id } = this.props;
-    
+
     if (session_id) {
       CallApi.get("/account", {
         params: { session_id },
@@ -183,8 +183,11 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
+  //console.log("mapDispatchToProps user, session_id", user, session_id);
+
   return {
-    updateAuth: (user, session_id) => dispatch(actionCreatorUpdateAuth()),
+    updateAuth: (user, session_id) =>
+      dispatch(actionCreatorUpdateAuth({ user, session_id })),
     onLogOut: () => dispatch(actionCreatorLogout()),
   };
 };
