@@ -1,5 +1,5 @@
 import Cookies from "universal-cookie";
-import { combineReducers } from 'redux';
+//import { combineReducers } from "redux";
 
 const cookies = new Cookies();
 
@@ -12,8 +12,7 @@ const initialState = {
   showModal: false,
 };
 
-const reducerAuth = (state = initialState, action) => {
-
+const authReducer = (state = initialState, action) => {
   //console.log("state", state);
 
   switch (action.type) {
@@ -22,9 +21,8 @@ const reducerAuth = (state = initialState, action) => {
         path: "/",
         maxAge: 2592000,
       });
-      
-      const returnState = 
-       {
+
+      const returnState = {
         ...state,
         user: action.payload.user,
         session_id: action.payload.session_id,
@@ -42,46 +40,24 @@ const reducerAuth = (state = initialState, action) => {
         favorite: [],
         watchlist: [],
       };
-    default:
-      return state;
-  }
-};
-const reducerToggleShowLogin = (state = initialState, action) => {
-  switch (action.type) {
-    case "TOGGLESHOWLOGIN":
+    case "TOGGLE_SHOWLOGIN":
       return {
         ...state,
-        showModal: !state.showModal
+        showModal: !state.showModal,
       };
-    default:
-      return state;
-  }
-};
-const reducerFavorite = (state = initialState, action) => {
-  switch (action.type) {
-    case "UPDATEFAVORITE":
+    case "UPDATE_FAVORITE":
       return {
         ...state,
-        favorite: action.payload.favorite
+        favorite: action.payload,
       };
-    default:
-      return state;
-  }
-};
-const reducerWatchlist = (state = initialState, action) => {
-  switch (action.type) {
-    case "UPDATEWATCHLIST":
+    case "UPDATE_WATCHLIST":
       return {
         ...state,
-        watchlist: action.payload.watchlist
+        watchlist: action.payload,
       };
     default:
       return state;
   }
 };
 
-//const reducerApp = () => , reducerFavorite, reducerWatchlist
-const reducerApp = () => {
-  return combineReducers(reducerAuth, reducerToggleShowLogin, reducerFavorite, reducerWatchlist);
-}
-export default reducerApp;
+export default authReducer;

@@ -1,33 +1,35 @@
 import React from "react";
+//import { bindActionCreators } from "redux";
 import Header from "./Header/Header";
-//import Cookies from "universal-cookie";
 import MoviesPage from "./pages/MoviesPage/MoviesPage";
 import MoviePage from "./pages/MoviePage/MoviePage";
 import CallApi from "../api/api";
 import { BrowserRouter, Route } from "react-router-dom";
 import {
-  actionCreatorUpdateAuth,
-  actionCreatorLogout,
+  updateAuth,
+  onLogOut,
+  toggleShowLogin,
+  updateFavorite,
+  updateWatchlist,
 } from "../actions/actions";
 import { connect } from "react-redux";
-//const cookies = new Cookies();
 
 export const AppContext = React.createContext();
 class App extends React.Component {
-  constructor() {
-    super();
+  // constructor() {
+  //   super();
 
-    this.initialState = {
-      favorite: [],
-      watchlist: [],
-      showModal: false,
-      // user: null,
-      // session_id: cookies.get("session_id") || null,
-      // isAuth: false,
-    };
+  //   this.initialState = {
+  //     favorite: [],
+  //     watchlist: [],
+  //     showModal: false,
+  //     // user: null,
+  //     // session_id: cookies.get("session_id") || null,
+  //     // isAuth: false,
+  //   };
 
-    this.state = this.initialState;
-  }
+  //   this.state = this.initialState;
+  // }
 
   componentDidMount() {
     const { session_id } = this.props;
@@ -42,58 +44,19 @@ class App extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { user, session_id } = this.state;
-
-    if (!prevState.user && user) {
-      this.getFavoriteMovies(user, session_id);
-      this.getWatchlistMovies(user, session_id);
-    }
+    // const { user, session_id } = this.state;
+    // if (!prevState.user && user) {
+    //   this.getFavoriteMovies(user, session_id);
+    //   this.getWatchlistMovies(user, session_id);
+    // }
   }
 
-  // updateAuth = (user, session_id) => {
-  //   this.props.store.dispatch(
-  //     actionCreatorUpdateAuth({
-  //       user,
-  //       session_id,
-  //     })
-  //   );
-
-  //   console.log("updateAuth", user, session_id);
-
-  //   // cookies.set("session_id", session_id, {
-  //   //   path: "/",
-  //   //   maxAge: 2592000,
-  //   // });
-  //   // this.setState({
-  //   //   user,
-  //   //   session_id,
-  //   //   isAuth: true
-  //   // });
+  // toggleShowLogin = () => {
+  //   this.setState((prevState) => ({
+  //     //isAuth: !prevState.isAuth,
+  //     showModal: !prevState.showModal,
+  //   }));
   // };
-
-  // onLogOut = () => {
-  //   this.props.store.dispatch(actionCreatorLogout());
-
-  //   console.log("onLogOut getState", this.props.store.getState());
-
-  //   this.forceUpdate();
-
-  //   // cookies.remove("session_id");
-  //   // this.setState({
-  //   //   session_id: null,
-  //   //   user: null,
-  //   //   isAuth: false,
-  //   //   favorite: [],
-  //   //   watchlist: [],
-  //   // });
-  // };
-
-  toggleShowLogin = () => {
-    this.setState((prevState) => ({
-      //isAuth: !prevState.isAuth,
-      showModal: !prevState.showModal,
-    }));
-  };
 
   getFavoriteMovies = (user, session_id) => {
     CallApi.get(`/account/${user.id}/favorite/movies`, {
@@ -102,9 +65,7 @@ class App extends React.Component {
         language: "ru-RU",
       },
     }).then((data) => {
-      this.setState({
-        favorite: data.results,
-      });
+      this.props.updateFavorite(data.results);
     });
   };
 
@@ -117,35 +78,44 @@ class App extends React.Component {
         language: "ru-RU",
       },
     }).then((data) => {
-      this.setState({
-        watchlist: data.results,
-      });
+      this.props.updateWatchlist(data.results);
     });
   };
 
   render() {
+    // const {
+    //   favorite,
+    //   watchlist,
+    //   // user,
+    //   // session_id,
+    //   // isAuth,
+    //   showModal,
+    // } = this.state;
+
     const {
-      favorite,
-      watchlist,
-      // user,
-      // session_id,
-      // isAuth,
-      showModal,
-    } = this.state;
+      user,
+      session_id,
+      isAuth,
+      favorite = [],
+      watchlist = [],
+      showModal = false,
+      updateAuth,
+      onLogOut,
+      toggleShowLogin,
+    } = this.props;
 
-    const { user, session_id, isAuth, updateAuth, onLogOut } = this.props;
+    console.log("watchlist", watchlist);
 
-    // console.log("this.props.store.getState()", this.props.store.getState());
-    console.log("render user", user);
+    console.log("this.props", this.props);
 
     return (
       <BrowserRouter>
         <AppContext.Provider
           value={{
-            user: user,
-            session_id: session_id,
-            favorite: favorite,
-            watchlist: watchlist,
+            user,
+            session_id,
+            favorite,
+            watchlist,
             updateAuth,
             onLogOut,
             // updateAuth: this.updateAuth,
@@ -154,7 +124,7 @@ class App extends React.Component {
             isAuth: isAuth,
             // onLogOut: this.onLogOut,
             showModal: showModal,
-            toggleShowLogin: this.toggleShowLogin,
+            toggleShowLogin: toggleShowLogin,
             getFavoriteMovies: this.getFavoriteMovies,
             getWatchlistMovies: this.getWatchlistMovies,
           }}
@@ -176,20 +146,27 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user,
-    session_id: state.session_id,
-    isAuth: state.isAuth,
+    user: state.auth.user,
+    session_id: state.auth.session_id,
+    isAuth: state.auth.isAuth,
+    showModal: state.auth.showModal,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  //console.log("mapDispatchToProps user, session_id", user, session_id);
+const mapDispatchToProps = { updateAuth, onLogOut, toggleShowLogin, updateFavorite, updateWatchlist };
+// (dispatch) => {
+//   //console.log("mapDispatchToProps user, session_id", user, session_id);
 
-  return {
-    updateAuth: (user, session_id) =>
-      dispatch(actionCreatorUpdateAuth({ user, session_id })),
-    onLogOut: () => dispatch(actionCreatorLogout()),
-  };
-};
+//   return bindActionCreators(
+//     { updateAuth, onLogOut, toggleShowLogin, updateFavorite, updateWatchlist },
+//     dispatch
+//   );
+  // updateAuth: bindActionCreators(updateAuth, dispatch),
+  // onLogOut: () => bindActionCreators(onLogOut, dispatch),
+  // toggleShowLogin: bindActionCreators(toggleShowLogin, dispatch),
+  // updateFavorite: bindActionCreators(updateFavorite, dispatch),
+  // updateWatchlist: bindActionCreators(updateWatchlist, dispatch),
+  // };
+// };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
