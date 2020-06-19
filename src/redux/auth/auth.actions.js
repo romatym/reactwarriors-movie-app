@@ -2,7 +2,7 @@
 
 export const updateAuth = (payload) => {
     return {
-      type: "UPDATEAUTH",
+      type: "UPDATE_AUTH",
       payload,
     };
   };

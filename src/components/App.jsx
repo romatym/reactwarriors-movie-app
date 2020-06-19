@@ -11,7 +11,7 @@ import {
   toggleShowLogin,
   updateFavorite,
   updateWatchlist,
-} from "../actions/actions";
+} from "../redux/auth/auth.actions";
 import { connect } from "react-redux";
 
 export const AppContext = React.createContext();

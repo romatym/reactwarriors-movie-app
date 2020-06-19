@@ -1,5 +1,5 @@
 import Cookies from "universal-cookie";
-//import { combineReducers } from "redux";
+import * as types from "./auth.types";
 
 const cookies = new Cookies();
 
@@ -16,7 +16,7 @@ const authReducer = (state = initialState, action) => {
   //console.log("state", state);
 
   switch (action.type) {
-    case "UPDATEAUTH":
+    case types.UPDATE_AUTH:
       cookies.set("session_id", action.payload.session_id, {
         path: "/",
         maxAge: 2592000,
@@ -28,9 +28,9 @@ const authReducer = (state = initialState, action) => {
         session_id: action.payload.session_id,
         isAuth: true,
       };
-      console.log("return state", returnState);
+      //console.log("return state", returnState);
       return returnState;
-    case "LOGOUT":
+    case types.LOGOUT:
       cookies.remove("session_id");
       return {
         ...state,
@@ -40,17 +40,17 @@ const authReducer = (state = initialState, action) => {
         favorite: [],
         watchlist: [],
       };
-    case "TOGGLE_SHOWLOGIN":
+    case types.TOGGLE_SHOWLOGIN:
       return {
         ...state,
         showModal: !state.showModal,
       };
-    case "UPDATE_FAVORITE":
+    case types.UPDATE_FAVORITE:
       return {
         ...state,
         favorite: action.payload,
       };
-    case "UPDATE_WATCHLIST":
+    case types.UPDATE_WATCHLIST:
       return {
         ...state,
         watchlist: action.payload,
