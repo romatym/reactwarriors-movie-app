@@ -11,6 +11,8 @@ import {
   toggleShowLogin,
   updateFavorite,
   updateWatchlist,
+  fetchAuth,
+  fetchFavorite,
 } from "../redux/auth/auth.actions";
 import { connect } from "react-redux";
 
@@ -32,15 +34,17 @@ class App extends React.Component {
   // }
 
   componentDidMount() {
-    const { session_id } = this.props;
+    const { session_id, fetchAuth } = this.props;
 
     if (session_id) {
-      CallApi.get("/account", {
-        params: { session_id },
-      }).then((user) => {
-        this.props.updateAuth(user, session_id);
-      });
+      fetchAuth(session_id);
     }
+    //   CallApi.get("/account", {
+    //     params: { session_id },
+    //   }).then((user) => {
+    //     this.props.updateAuth(user, session_id);
+    //   });
+    // }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -58,16 +62,9 @@ class App extends React.Component {
   //   }));
   // };
 
-  getFavoriteMovies = (user, session_id) => {
-    CallApi.get(`/account/${user.id}/favorite/movies`, {
-      params: {
-        session_id: session_id,
-        language: "ru-RU",
-      },
-    }).then((data) => {
-      this.props.updateFavorite(data.results);
-    });
-  };
+  // getFavoriteMovies = (data) => {
+  //   this.props.updateFavorite(data);
+  // };
 
   getWatchlistMovies = (user, session_id) => {
     //const { session_id, user } = this.state;
@@ -104,9 +101,9 @@ class App extends React.Component {
       toggleShowLogin,
     } = this.props;
 
-    console.log("watchlist", watchlist);
+    //console.log("watchlist", watchlist);
 
-    console.log("this.props", this.props);
+    //console.log("this.props", this.props);
 
     return (
       <BrowserRouter>
@@ -153,7 +150,15 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = { updateAuth, onLogOut, toggleShowLogin, updateFavorite, updateWatchlist };
+const mapDispatchToProps = {
+  updateAuth,
+  fetchAuth,
+  fetchFavorite,
+  onLogOut,
+  toggleShowLogin,
+  updateFavorite,
+  updateWatchlist,
+};
 // (dispatch) => {
 //   //console.log("mapDispatchToProps user, session_id", user, session_id);
 
@@ -161,12 +166,12 @@ const mapDispatchToProps = { updateAuth, onLogOut, toggleShowLogin, updateFavori
 //     { updateAuth, onLogOut, toggleShowLogin, updateFavorite, updateWatchlist },
 //     dispatch
 //   );
-  // updateAuth: bindActionCreators(updateAuth, dispatch),
-  // onLogOut: () => bindActionCreators(onLogOut, dispatch),
-  // toggleShowLogin: bindActionCreators(toggleShowLogin, dispatch),
-  // updateFavorite: bindActionCreators(updateFavorite, dispatch),
-  // updateWatchlist: bindActionCreators(updateWatchlist, dispatch),
-  // };
+// updateAuth: bindActionCreators(updateAuth, dispatch),
+// onLogOut: () => bindActionCreators(onLogOut, dispatch),
+// toggleShowLogin: bindActionCreators(toggleShowLogin, dispatch),
+// updateFavorite: bindActionCreators(updateFavorite, dispatch),
+// updateWatchlist: bindActionCreators(updateWatchlist, dispatch),
+// };
 // };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

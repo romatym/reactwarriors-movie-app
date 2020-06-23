@@ -1,32 +1,66 @@
+import CallApi from "../../api/api";
 
+export const fetchAuth = (session_id) => (dispatch) => {
+  dispatch({
+    type: "REQUEST_AUTH",
+  });
 
-export const updateAuth = (payload) => {
-    return {
-      type: "UPDATE_AUTH",
-      payload,
-    };
-  };
-  
-  export const onLogOut = () => {
-    return {
-      type: "LOGOUT",
-    };
-  };
+  CallApi.get("/account", {
+    params: { session_id },
+  })
+    .then((user) => {
+      //this.props.updateAuth(user, session_id);
+      console.log("user", user);
+      dispatch(updateAuth({ user, session_id }));
+      dispatch(fetchFavorite(user, session_id));
+    })
+    .catch((error) => {
+      dispatch({
+        type: "FETCH_ERROR_AUTH",
+        payload: error
+      });
+    });
+};
 
-  export const toggleShowLogin = () => {
-    return {
-      type: "TOGGLE_SHOWLOGIN",
-    };
-  };
+export const fetchFavorite = (user, session_id) => (dispatch) => {
+  CallApi.get(`/account/${user.id}/favorite/movies`, {
+    params: {
+      session_id: session_id,
+      language: "ru-RU",
+    },
+  }).then((data) => {
+    dispatch(updateFavorite(data.results));
+  });
+};
 
-  export const updateFavorite = () => {
-    return {
-      type: "UPDATE_FAVORITE",
-    };
-  };
+export const updateAuth = ({ user, session_id }) => ({
+  type: "UPDATE_AUTH",
+  payload: {
+    user,
+    session_id,
+  },
+});
 
-  export const updateWatchlist = () => {
-    return {
-      type: "UPDATE_WATCHLIST",
-    };
+export const onLogOut = () => {
+  return {
+    type: "LOGOUT",
   };
+};
+
+export const toggleShowLogin = () => {
+  return {
+    type: "TOGGLE_SHOWLOGIN",
+  };
+};
+
+export const updateFavorite = () => {
+  return {
+    type: "UPDATE_FAVORITE",
+  };
+};
+
+export const updateWatchlist = () => {
+  return {
+    type: "UPDATE_WATCHLIST",
+  };
+};
