@@ -11,8 +11,10 @@ export const fetchAuth = (session_id) => (dispatch) => {
     .then((user) => {
       //this.props.updateAuth(user, session_id);
       console.log("user", user);
+
       dispatch(updateAuth({ user, session_id }));
       dispatch(fetchFavorite(user, session_id));
+      dispatch(fetchWatchlist(user, session_id));
     })
     .catch((error) => {
       dispatch({
@@ -30,6 +32,17 @@ export const fetchFavorite = (user, session_id) => (dispatch) => {
     },
   }).then((data) => {
     dispatch(updateFavorite(data.results));
+  });
+};
+
+export const fetchWatchlist = (user, session_id) => (dispatch) => {
+  CallApi.get(`/account/${user.id}/watchlist/movies`, {
+    params: {
+      session_id: session_id,
+      language: "ru-RU",
+    },
+  }).then((data) => {
+    dispatch(updateWatchlist(data.results));
   });
 };
 

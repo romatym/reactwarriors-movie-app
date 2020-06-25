@@ -85,19 +85,14 @@ class LoginForm extends React.Component {
       .then((data) => {
         session_id = data.session_id;
 
-        //console.log("data session_id", session_id);
-        
-        //this.props.updateSessionId(session_id);
-
         return CallApi.get("/account", {
           params: { session_id: session_id },
         });
       })
       .then((user) => {
-        
-        console.log("user, session_id", user, session_id);
+        console.log("запрос вернул user, session_id", user, session_id);
 
-        this.props.updateAuth(user, session_id);
+        this.props.updateAuth({user, session_id});
         this.props.toggleShowLogin();
         this.setState({
           submitting: false,

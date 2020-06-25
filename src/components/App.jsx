@@ -18,20 +18,7 @@ import { connect } from "react-redux";
 
 export const AppContext = React.createContext();
 class App extends React.Component {
-  // constructor() {
-  //   super();
 
-  //   this.initialState = {
-  //     favorite: [],
-  //     watchlist: [],
-  //     showModal: false,
-  //     // user: null,
-  //     // session_id: cookies.get("session_id") || null,
-  //     // isAuth: false,
-  //   };
-
-  //   this.state = this.initialState;
-  // }
 
   componentDidMount() {
     const { session_id, fetchAuth } = this.props;
@@ -39,12 +26,6 @@ class App extends React.Component {
     if (session_id) {
       fetchAuth(session_id);
     }
-    //   CallApi.get("/account", {
-    //     params: { session_id },
-    //   }).then((user) => {
-    //     this.props.updateAuth(user, session_id);
-    //   });
-    // }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -54,17 +35,6 @@ class App extends React.Component {
     //   this.getWatchlistMovies(user, session_id);
     // }
   }
-
-  // toggleShowLogin = () => {
-  //   this.setState((prevState) => ({
-  //     //isAuth: !prevState.isAuth,
-  //     showModal: !prevState.showModal,
-  //   }));
-  // };
-
-  // getFavoriteMovies = (data) => {
-  //   this.props.updateFavorite(data);
-  // };
 
   getWatchlistMovies = (user, session_id) => {
     //const { session_id, user } = this.state;
@@ -80,14 +50,7 @@ class App extends React.Component {
   };
 
   render() {
-    // const {
-    //   favorite,
-    //   watchlist,
-    //   // user,
-    //   // session_id,
-    //   // isAuth,
-    //   showModal,
-    // } = this.state;
+
 
     const {
       user,
@@ -102,7 +65,6 @@ class App extends React.Component {
     } = this.props;
 
     //console.log("watchlist", watchlist);
-
     //console.log("this.props", this.props);
 
     return (
@@ -115,11 +77,7 @@ class App extends React.Component {
             watchlist,
             updateAuth,
             onLogOut,
-            // updateAuth: this.updateAuth,
-            // updateUser: this.updateUser,
-            // updateSessionId: this.updateSessionId,
             isAuth: isAuth,
-            // onLogOut: this.onLogOut,
             showModal: showModal,
             toggleShowLogin: toggleShowLogin,
             getFavoriteMovies: this.getFavoriteMovies,
@@ -129,8 +87,7 @@ class App extends React.Component {
           <div>
             <Header
               user={user}
-              updateAuth={this.updateAuth}
-              //updateSessionId={this.updateSessionId}
+              updateAuth={updateAuth}
             />
             <Route exact path="/" component={MoviesPage} />
             <Route path="/movie/:id" component={MoviePage} />
@@ -159,19 +116,5 @@ const mapDispatchToProps = {
   updateFavorite,
   updateWatchlist,
 };
-// (dispatch) => {
-//   //console.log("mapDispatchToProps user, session_id", user, session_id);
-
-//   return bindActionCreators(
-//     { updateAuth, onLogOut, toggleShowLogin, updateFavorite, updateWatchlist },
-//     dispatch
-//   );
-// updateAuth: bindActionCreators(updateAuth, dispatch),
-// onLogOut: () => bindActionCreators(onLogOut, dispatch),
-// toggleShowLogin: bindActionCreators(toggleShowLogin, dispatch),
-// updateFavorite: bindActionCreators(updateFavorite, dispatch),
-// updateWatchlist: bindActionCreators(updateWatchlist, dispatch),
-// };
-// };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
