@@ -19,7 +19,7 @@ export const fetchAuth = (session_id) => (dispatch) => {
     .catch((error) => {
       dispatch({
         type: "FETCH_ERROR_AUTH",
-        payload: error
+        payload: error,
       });
     });
 };
