@@ -1,45 +1,21 @@
-import React, { useState, useEffect } from "react";
-import CallApi from "../../../api/api";
+import React from "react";
 import FavoriteIcon from "../../Movies/FavoriteIcon";
 import WatchlistIcon from "../../Movies/WatchlistIcon";
-import MovieDetails from "./MovieDetails";
+import Image from "../../ImageCard/Image";
 
 function MovieHeader(props) {
-  const { movieId } = props;
-  const [movie, setMovie] = useState({});
-  const [isLoading, setLoading] = useState(true);
+  const { movie } = props;
 
-  useEffect(() => {
-    setLoading(true);
-    CallApi.get(`/movie/${movieId}`, {
-      params: {
-        language: "ru-RU",
-      },
-    }).then((data) => {
-      setMovie(data);
-      setLoading(false);
-    });
-  }, [movieId]);
-
-  if (isLoading) {
-    return <div className="loader" />;
+  if (!movie) {
+    return <div className="loader"></div>;
   }
 
-  const imagePath = movie.backdrop_path || movie.poster_path;
   const releaseYear = movie.release_date && movie.release_date.slice(0, 4);
 
   return (
     <div className="row no-gutters">
       <div className="col-md-4">
-        <img
-          className="card-img"
-          src={
-            imagePath
-              ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-              : ""
-          }
-          alt=""
-        />
+        <Image imagePath={movie.poster_path} className="card-img" />
       </div>
 
       <div className="col-md-8">
@@ -58,7 +34,6 @@ function MovieHeader(props) {
               <WatchlistIcon item={movie} />
             </div>
           </div>
-          <MovieDetails movie={movie} />
         </div>
       </div>
     </div>

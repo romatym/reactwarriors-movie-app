@@ -19,7 +19,7 @@ function MovieDetails(props) {
   return (
     <Row>
       <Col>
-        <table className="table top-indent ">
+        <table className="table top-indent table-borderless ">
           <tbody>
             <tr>
               <th>Жанры:</th>

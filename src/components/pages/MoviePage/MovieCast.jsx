@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CallApi from "../../../api/api";
-import {
-  Card,
-  CardImg,
-  CardBody,
-  CardTitle,
-  Row,
-  Col,
-} from "reactstrap";
+import Image from "../../ImageCard/Image";
+import { Card, CardBody, CardTitle, Row, Col } from "reactstrap";
 
 function MovieCast(props) {
   const movieId = props.match.params.movieId;
@@ -26,7 +20,7 @@ function MovieCast(props) {
   }, [movieId]);
 
   if (!castLoaded) {
-    return <div className="loader text-center"/>;
+    return <div className="loader text-center" />;
   }
 
   return (
@@ -36,15 +30,12 @@ function MovieCast(props) {
         return (
           <Col className="col-sm" key={actor.id}>
             <Card className="cast-card">
-              <CardImg
+              <Image
+                imagePath={actor.profile_path}
+                notAvailablePath="/images/no photo.png"
                 className="cast-img--height"
-                src={
-                  actor.profile_path
-                    ? `https://image.tmdb.org/t/p/w500${actor.profile_path}`
-                    : `/images/no photo.png`
-                }
-                alt=""
               />
+
               <CardBody className="cast-text--height">
                 <CardTitle className="text-center">{actor.character}</CardTitle>
                 <CardTitle className="text-center cast-text--bold">
