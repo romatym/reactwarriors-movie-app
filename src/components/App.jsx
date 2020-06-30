@@ -1,5 +1,4 @@
 import React from "react";
-//import { bindActionCreators } from "redux";
 import Header from "./Header/Header";
 import MoviesPage from "./pages/MoviesPage/MoviesPage";
 import MoviePage from "./pages/MoviePage/MoviePage";

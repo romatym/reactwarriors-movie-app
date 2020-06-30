@@ -1,7 +1,5 @@
-import Cookies from "universal-cookie";
 import * as types from "./auth.types";
-
-const cookies = new Cookies();
+import { cookies } from "../../components/utils/cookies";
 
 const initialState = {
   user: null,
@@ -13,25 +11,23 @@ const initialState = {
 };
 
 const authReducer = (state = initialState, action) => {
-  //console.log("state", state);
-
   switch (action.type) {
+    case types.FETCH_SUCCESS_AUTH:
+      return {
+        ...state,
+        session_id: action.payload.session_id,
+        user: action.payload.user
+      };
     case types.UPDATE_AUTH:
-      cookies.set("session_id", action.payload.session_id, {
-        path: "/",
-        maxAge: 2592000,
-      });
-
       const returnState = {
         ...state,
         user: action.payload.user,
         session_id: action.payload.session_id,
         isAuth: true,
       };
-      //console.log("return state", returnState);
       return returnState;
     case types.LOGOUT:
-      cookies.remove("session_id");
+      
       return {
         ...state,
         session_id: null,
