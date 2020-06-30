@@ -9,9 +9,6 @@ export const fetchAuth = (session_id) => (dispatch) => {
     params: { session_id },
   })
     .then((user) => {
-      //this.props.updateAuth(user, session_id);
-      console.log("user", user);
-
       dispatch(updateAuth({ user, session_id }));
       dispatch(fetchFavorite(user, session_id));
       dispatch(fetchWatchlist(user, session_id));
