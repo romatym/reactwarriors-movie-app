@@ -4,17 +4,17 @@ import MovieDetails from "./MovieDetails";
 import MovieVideo from "./MovieVideo";
 import MovieCast from "./MovieCast";
 import CallApi from "../../../api/api";
-
 import {
   Route,
   NavLink as NavLinkRouter,
   Redirect,
   Switch,
+  useParams
 } from "react-router-dom";
 import { TabPane, Nav, NavItem, NavLink } from "reactstrap";
 
 function MoviePage(props) {
-  const movieId = props.match.params.id;
+  const { movieId } = useParams(); //props.match.params.id;
 
   const [movie, setMovie] = useState({});
   const [isLoading, setLoading] = useState(true);
@@ -62,9 +62,10 @@ function MoviePage(props) {
         <Switch>
           <Route
             path="/movie/:movieId/details"
-            render={(props) => <MovieDetails {...props} movie={movie} />}
-            // component={MovieDetails}
+            // render={(props) => <MovieDetails {...props} movie={movie} />}
           />
+          <MovieDetails movie={movie} />
+          <Route />
           <Route path="/movie/:movieId/video" component={MovieVideo} />
           <Route path="/movie/:movieId/cast" component={MovieCast} />
           <Redirect to={`/movie/${movieId}/details`} />

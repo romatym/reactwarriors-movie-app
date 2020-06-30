@@ -20,7 +20,11 @@ function MovieCast(props) {
   }, [movieId]);
 
   if (!castLoaded) {
-    return <div className="loader text-center" />;
+    return (
+      <Row>
+        <div className="loader text-center" />
+      </Row>
+    );
   }
 
   return (

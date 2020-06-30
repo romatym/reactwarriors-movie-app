@@ -3,21 +3,18 @@ import PropTypes from "prop-types";
 import { CardImg } from "reactstrap";
 
 const ImageCard = (props) => {
-  const { imagePath, notAvailablePath = "", className = "" } = props;
-
-  console.log("imagePath", imagePath);
+  const { imagePath, notAvailablePath = "", ...rest } = props;
 
   return (
-    // <img
     <CardImg
-
-      className={className}
+      {...rest}
+      // className={className}
       src={
         imagePath
           ? `https://image.tmdb.org/t/p/w500${imagePath}`
           : notAvailablePath
       }
-      alt=""
+      // alt=""
     />
   );
 };

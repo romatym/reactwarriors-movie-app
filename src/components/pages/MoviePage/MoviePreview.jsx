@@ -3,6 +3,10 @@ import FavoriteIcon from "../../Movies/FavoriteIcon";
 import WatchlistIcon from "../../Movies/WatchlistIcon";
 import Image from "../../ImageCard/Image";
 
+const getYearFromDate = (date) => {
+  return date && date.slice(0, 4);
+}
+
 function MovieHeader(props) {
   const { movie } = props;
 
@@ -10,7 +14,7 @@ function MovieHeader(props) {
     return <div className="loader"></div>;
   }
 
-  const releaseYear = movie.release_date && movie.release_date.slice(0, 4);
+  const releaseYear = getYearFromDate(movie.release_date);
 
   return (
     <div className="row no-gutters">

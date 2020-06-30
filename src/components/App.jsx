@@ -36,7 +36,7 @@ class App extends React.Component {
         <div>
           <Header user={auth.user} updateAuth={authActions.updateAuth} />
           <Route exact path="/" component={MoviesPage} />
-          <Route path="/movie/:id" component={MoviePage} />
+          <Route path="/movie/:movieId" component={MoviePage} />
         </div>
         {/* </AppContext.Provider> */}
       </BrowserRouter>

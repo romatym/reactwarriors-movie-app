@@ -4,11 +4,7 @@ import { Row, Col } from "reactstrap";
 function MovieDetails(props) {
   const {movie} = props;
 
-  if (!movie) {
-    return <div className="loader"></div>;
-  }
-
-  const genresList = movie.genres.map((genre) => {
+  const GenresBadges = movie.genres.map((genre) => {
     return (
       <span key={genre.id} className="badge badge-primary badge-pill">
         {genre.name}
@@ -23,7 +19,7 @@ function MovieDetails(props) {
           <tbody>
             <tr>
               <th>Жанры:</th>
-              <td colSpan="3">{genresList}</td>
+              <td colSpan="3">{GenresBadges}</td>
             </tr>
             <tr>
               <th>Рейтинг:</th>
