@@ -2,18 +2,8 @@ import React from "react";
 import Header from "./Header/Header";
 import MoviesPage from "./pages/MoviesPage/MoviesPage";
 import MoviePage from "./pages/MoviePage/MoviePage";
-import CallApi from "../api/api";
 import { BrowserRouter, Route } from "react-router-dom";
-import {
-  updateAuth,
-  onLogOut,
-  toggleShowLogin,
-  updateFavorite,
-  updateWatchlist,
-  fetchAuth,
-  fetchFavorite,
-} from "../redux/auth/auth.actions";
-import { connect } from "react-redux";
+
 import { withAuth } from "../hoc/withAuth";
 
 // export const AppContext = React.createContext();
@@ -29,7 +19,7 @@ class App extends React.Component {
   componentDidUpdate(prevProps, prevState) {}
 
   render() {
-    const {auth, authActions} = this.props;
+    const { auth, authActions } = this.props;
 
     return (
       <BrowserRouter>

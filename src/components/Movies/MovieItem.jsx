@@ -2,10 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import FavoriteIcon from "./FavoriteIcon";
 import WatchlistIcon from "./WatchlistIcon";
-import AppContextHOC from "../HOC/AppContextHOC";
+// import AppContextHOC from "../HOC/AppContextHOC";
 //import CallApi from "../../api/api";
 import { Link } from "react-router-dom";
 import Image from "../ImageCard/Image";
+import { withAuth } from "../../hoc/withAuth";
 
 class MovieItem extends React.Component {
   render() {
@@ -40,4 +41,4 @@ MovieItem.propTypes = {
   item: PropTypes.object.isRequired,
 };
 
-export default AppContextHOC(MovieItem);
+export default withAuth(MovieItem);

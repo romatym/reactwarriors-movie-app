@@ -2,12 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Bookmark, BookmarkBorder } from "@material-ui/icons";
 import CallApi from "../../api/api";
-import AppContextHOC from "../HOC/AppContextHOC";
+// import AppContextHOC from "../HOC/AppContextHOC";
+import { withAuth } from "../../hoc/withAuth";
 
 const WatchlistIcon = (props) => {
-  const { item, watchlist } = props;
+  const { item } = props;
+  const { watchlist } = props.auth;
+
   const isWatchlist = watchlist.some((movie) => movie.id === item.id);
-  
+
   const onClickWatchlist = () => {
     const { user, session_id, getWatchlistMovies, toggleShowLogin } = props;
     if (!session_id) {
@@ -42,4 +45,4 @@ WatchlistIcon.propTypes = {
   // onClickWatchlist: PropTypes.func.isRequired
 };
 
-export default AppContextHOC(WatchlistIcon);
+export default withAuth(WatchlistIcon);

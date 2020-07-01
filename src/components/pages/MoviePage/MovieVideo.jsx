@@ -12,11 +12,13 @@ const getVideoContainer = (video) => {
 
   switch (site) {
     case "YouTube":
-      const src = `https://www.youtube.com/embed/${key}?controls=0`;
-      return getIFrame(name, src);
+      return getIFrame(name, `https://www.youtube.com/embed/${key}?controls=0`);
     case "Vimeo":
-      const src = `https://vimeo.com/video/${key}?title=0&byline=0`;
-      return getIFrame(name, src, "webkitallowfullscreen mozallowfullscreen");
+      return getIFrame(
+        name,
+        `https://vimeo.com/video/${key}?title=0&byline=0`,
+        "webkitallowfullscreen mozallowfullscreen"
+      );
     default:
       return NoVideo;
   }

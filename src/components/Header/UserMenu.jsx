@@ -5,8 +5,9 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
-import AppContextHOC from "../HOC/AppContextHOC";
+// import AppContextHOC from "../HOC/AppContextHOC";
 import CallApi from "../../api/api";
+import { withAuth } from "../../hoc/withAuth";
 
 class UserMenu extends Component {
   state = {
@@ -20,19 +21,17 @@ class UserMenu extends Component {
   };
 
   handleLogOut = () => {
-    //console.log("delete session_id", this.props.session_id);
-
     CallApi.delete("/authentication/session", {
       body: {
-        session_id: this.props.session_id,
+        session_id: this.props.auth.session_id,
       },
     }).then(() => {
-      this.props.onLogOut();
+      this.props.authActions.onLogOut();
     });
   };
 
   render() {
-    const { user } = this.props;
+    const { user } = this.props.auth;
     return (
       <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleDropdown}>
         <DropdownToggle
@@ -57,4 +56,4 @@ class UserMenu extends Component {
   }
 }
 
-export default AppContextHOC(UserMenu);
+export default withAuth(UserMenu);

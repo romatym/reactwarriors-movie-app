@@ -1,9 +1,10 @@
 import React from "react";
 import { Modal, ModalBody } from "reactstrap";
 import LoginForm from "./LoginForm";
-import { AppContext } from "../../App";
+// import { AppContext } from "../../App";
+import { withAuth } from "../../../hoc/withAuth";
 
-export default class Login extends React.Component {
+class Login extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -11,42 +12,28 @@ export default class Login extends React.Component {
     };
   }
 
-  toggleModal = () => {
-    this.setState(prevState => ({
-      showModal: !prevState.showModal,
-    }));
-  };
-
   render() {
+    const { showModal } = this.props.auth;
+    const { toggleShowLogin } = this.props.authActions;
+
     return (
       <div>
-        <AppContext.Consumer>
-          {context => {
+        <button
+          className="btn btn-success"
+          type="button"
+          onClick={toggleShowLogin}
+        >
+          Login
+        </button>
 
-            return (
-              <div>
-                <button
-                  className="btn btn-success"
-                  type="button"
-                  onClick={context.toggleShowLogin}
-                >
-                  Login
-                </button>
-
-                <Modal
-                  isOpen={context.showModal}
-                  toggle={context.toggleShowLogin}
-                  {...this.props}
-                >
-                  <ModalBody>
-                    <LoginForm />
-                  </ModalBody>
-                </Modal>
-              </div>
-            );
-          }}
-        </AppContext.Consumer>
+        <Modal isOpen={showModal} toggle={toggleShowLogin} {...this.props}>
+          <ModalBody>
+            <LoginForm />
+          </ModalBody>
+        </Modal>
       </div>
     );
   }
 }
+
+export default withAuth(Login);

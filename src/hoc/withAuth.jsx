@@ -3,7 +3,6 @@ import React from "react";
 import { connect } from "react-redux";
 import * as authActions from "../redux/auth/auth.actions";
 import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
 
 const mapStateToProps = (state) => {
   return {

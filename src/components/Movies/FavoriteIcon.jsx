@@ -2,10 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Star, StarBorder } from "@material-ui/icons";
 import CallApi from "../../api/api";
-import AppContextHOC from "../HOC/AppContextHOC";
+// import AppContextHOC from "../HOC/AppContextHOC";
+import { withAuth } from "../../hoc/withAuth";
 
 const FavoriteIcon = (props) => {
-  const { item, favorite } = props;
+  const { item } = props;
+  const { favorite } = props.auth;
   const isFavorite = favorite.some((movie) => movie.id === item.id);
 
   const onClickFavorite = () => {
@@ -38,8 +40,8 @@ const FavoriteIcon = (props) => {
 
 FavoriteIcon.propTypes = {
   item: PropTypes.object.isRequired,
-  // isFavorite: PropTypes.bool.isRequired
+  // favorite: PropTypes.array.isRequired,
   //onClickFavorite: PropTypes.func.isRequired,
 };
 
-export default AppContextHOC(FavoriteIcon);
+export default withAuth(FavoriteIcon);

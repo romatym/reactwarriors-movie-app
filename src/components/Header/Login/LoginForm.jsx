@@ -1,7 +1,8 @@
 import React from "react";
 import classNames from "classnames";
-import AppContextHOC from "../../HOC/AppContextHOC";
+// import AppContextHOC from "../../HOC/AppContextHOC";
 import CallApi from "../../../api/api";
+import { withAuth } from "../../../hoc/withAuth";
 
 class LoginForm extends React.Component {
   state = {
@@ -92,8 +93,8 @@ class LoginForm extends React.Component {
       .then((user) => {
         console.log("запрос вернул user, session_id", user, session_id);
 
-        this.props.updateAuth({user, session_id});
-        this.props.toggleShowLogin();
+        this.props.authActions.updateAuth({user, session_id});
+        this.props.authActions.toggleShowLogin();
         this.setState({
           submitting: false,
         });
@@ -209,4 +210,4 @@ class LoginForm extends React.Component {
   }
 }
 
-export default AppContextHOC(LoginForm);
+export default withAuth(LoginForm);
