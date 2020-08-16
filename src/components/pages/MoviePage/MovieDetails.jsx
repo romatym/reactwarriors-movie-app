@@ -2,6 +2,9 @@ import React from "react";
 import { Row, Col } from "reactstrap";
 
 function MovieDetails(props) {
+
+  console.log("MovieDetails props", props);
+
   const {movie} = props;
 
   const GenresBadges = movie.genres.map((genre) => {

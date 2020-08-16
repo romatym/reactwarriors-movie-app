@@ -9,7 +9,7 @@ import {
   NavLink as NavLinkRouter,
   Redirect,
   Switch,
-  useParams
+  useParams,
 } from "react-router-dom";
 import { TabPane, Nav, NavItem, NavLink } from "reactstrap";
 
@@ -34,6 +34,8 @@ function MoviePage(props) {
   if (isLoading) {
     return <div className="loader" />;
   }
+
+  console.log("movie", movie);
 
   return (
     <div className="container">
@@ -60,14 +62,14 @@ function MoviePage(props) {
       </Nav>
       <TabPane>
         <Switch>
-          <Route
-            path="/movie/:movieId/details"
-            // render={(props) => <MovieDetails {...props} movie={movie} />}
-          />
-          <MovieDetails movie={movie} />
-          <Route />
+          {console.log("path", props.location.pathname)}
           <Route path="/movie/:movieId/video" component={MovieVideo} />
           <Route path="/movie/:movieId/cast" component={MovieCast} />
+          <Route
+            path="/movie/:movieId/details"
+            render={(props) => <MovieDetails {...props} movie={movie} />}
+          />
+          <Route />
           <Redirect to={`/movie/${movieId}/details`} />
         </Switch>
       </TabPane>

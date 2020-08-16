@@ -91,7 +91,7 @@ class LoginForm extends React.Component {
         });
       })
       .then((user) => {
-        console.log("запрос вернул user, session_id", user, session_id);
+        //console.log("запрос вернул user, session_id", user, session_id);
 
         this.props.authActions.updateAuth({user, session_id});
         this.props.authActions.toggleShowLogin();

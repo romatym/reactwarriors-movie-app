@@ -4,6 +4,9 @@ import Image from "../../ImageCard/Image";
 import { Card, CardBody, CardTitle, Row, Col } from "reactstrap";
 
 function MovieCast(props) {
+  
+  console.log("MovieCast props", props);
+  
   const movieId = props.match.params.movieId;
   const [cast, setCast] = useState([]);
   const [castLoaded, setCastLoaded] = useState(false);

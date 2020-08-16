@@ -6,11 +6,11 @@ import MoviesHOC from "./MoviesHOC";
 const MoviesList = ({ movies, loaded }) => {
   return (
     <div className="row">
-      {!loaded && <div className="loader"></div>}
+      {!loaded && <div className="loader-list"></div>}
 
       {movies.map((item) => {
         return (
-          <div key={item.id} className="col-6 mb-4">
+          <div key={item.id} className="col-6 ">
             <MovieItem item={item} />
           </div>
         );

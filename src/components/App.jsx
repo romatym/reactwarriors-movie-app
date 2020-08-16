@@ -28,7 +28,6 @@ class App extends React.Component {
           <Route exact path="/" component={MoviesPage} />
           <Route path="/movie/:movieId" component={MoviePage} />
         </div>
-        {/* </AppContext.Provider> */}
       </BrowserRouter>
     );
   }

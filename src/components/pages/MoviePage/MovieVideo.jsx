@@ -25,10 +25,12 @@ const getVideoContainer = (video) => {
 };
 
 function MovieVideo(props) {
+
+  console.log("MovieVideo props", props);
+
   const movieId = props.match.params.movieId;
   const [videos, setVideos] = useState([]);
   const [videosLoaded, setVideosLoaded] = useState(false);
-  //const [videoIsOpen, setVideoIsOpen] = useState(false);
 
   useEffect(() => {
     CallApi.get(`/movie/${movieId}/videos`, {
