@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CallApi from "../../../api/api";
 import NoVideo from "../../../images/no video.jpg";
-import { Container, Row, Col } from "reactstrap";
 
 const getIFrame = (name, src, ...rest) => {
   return <iframe className="iframe-video" {...rest} title={name} frameBorder="0" src={src} allowfullscreen="allowfullscreen"/>;

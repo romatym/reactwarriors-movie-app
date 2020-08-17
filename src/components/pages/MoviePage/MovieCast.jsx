@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CallApi from "../../../api/api";
 import Image from "../../ImageCard/Image";
-import { Card, CardBody, CardTitle, Row, Col } from "reactstrap";
+import { Card, Row, Col } from "reactstrap";
 
 function MovieCast(props) {
   console.log("MovieCast props", props);
@@ -50,13 +50,6 @@ function MovieCast(props) {
                   <h3>{actor.name}</h3>
                   <span>{actor.character}</span>
                 </div>
-
-                {/* <CardBody className="cast-text--height">
-                <CardTitle className="text-center">{actor.character}</CardTitle>
-                <CardTitle className="text-center cast-text--bold">
-                  {actor.name}
-                </CardTitle>
-              </CardBody> */}
               </Card>
             </Col>
           );
