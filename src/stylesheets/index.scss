@@ -75,8 +75,8 @@ input.invalid {
 }
 
 .cast-img--height {
-  width: 140px;
-  max-height: 210px;
+  // width: 140px;
+  max-height: 362px;
   object-fit: fill;
   min-width: 1px;
   min-height: 1px;
@@ -95,8 +95,24 @@ input.invalid {
   font-weight: bold; 
 }
 
-.movie-card {
-  width: "100%";
+.width100 {
+  width: 100%;
+}
+
+.actors-name{
+  color: #fff;
+  // left: 15px;
+  // display: block;
+  position: absolute;
+  bottom: 10px;
+  background: rgba(8,28,36,.3);
+  width: 100%;
+  padding: 5px 10px;
+  height: 115px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
 }
 
 .cast-card {
@@ -113,6 +129,14 @@ input.invalid {
   position: relative;
   padding-bottom: 56.25%; /* 16:9 */
   height: 0;
+}
+.iframe-video {
+  width: 100%;
+  height: 303px;
+  border-top-width: 0px;
+  border-right-width: 0px;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
 }
 .videoWrapper iframe {
   position: absolute;

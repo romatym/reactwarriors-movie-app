@@ -36,7 +36,7 @@ export default class Filters extends React.Component {
 
         <Genres with_genres={with_genres} updateFilters={updateFilters} />
 
-        <button type="button" className="btn btn-light" onClick={clearFilters}>
+        <button type="button" className="btn btn-light width100" onClick={clearFilters}>
           Сбросить фильтры
         </button>
       </form>

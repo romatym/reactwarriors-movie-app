@@ -5,7 +5,7 @@ import Image from "../../ImageCard/Image";
 
 const getYearFromDate = (date) => {
   return date && date.slice(0, 4);
-}
+};
 
 function MovieHeader(props) {
   const { movie } = props;
@@ -16,8 +16,14 @@ function MovieHeader(props) {
 
   const releaseYear = getYearFromDate(movie.release_date);
 
+  // const backgroundImageStyleString =
+  //   "url(https://image.tmdb.org/t/p/w500" + movie.backdrop_path + ")";
+
   return (
-    <div className="row no-gutters">
+    <div
+      className="row"
+      // style={{ backgroundImage: backgroundImageStyleString }}
+    >
       <div className="col-md-4">
         <Image imagePath={movie.poster_path} className="card-img" />
       </div>
@@ -30,7 +36,7 @@ function MovieHeader(props) {
           <p className="card-text">
             <span className="text-muted">{movie.tagline}</span>
           </p>
-          <h5 className="card-text">Обзор</h5>
+          {/* <h5 className="card-text">Обзор</h5> */}
           <p className="card-text">{movie.overview}</p>
           <div className="d-flex justify-content-between">
             <div>

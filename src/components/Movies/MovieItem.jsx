@@ -4,6 +4,7 @@ import FavoriteIcon from "./FavoriteIcon";
 import WatchlistIcon from "./WatchlistIcon";
 import { Link } from "react-router-dom";
 import Image from "../ImageCard/Image";
+import NoImage from "../../images/no image.png";
 import { withAuth } from "../../hoc/withAuth";
 
 class MovieItem extends React.Component {
@@ -12,10 +13,11 @@ class MovieItem extends React.Component {
     const imagePath = item.backdrop_path || item.poster_path;
 
     return (
-      <div className="card movie-card shadow mb-3 bg-white rounded">
+      <div className="card width100 shadow mb-3 bg-white rounded">
         <a href={`/movie/${item.id}/details`}>
           <Image
             imagePath={imagePath}
+            notAvailablePath={NoImage}
             className="card-img-top card-img--height"
           />
         </a>

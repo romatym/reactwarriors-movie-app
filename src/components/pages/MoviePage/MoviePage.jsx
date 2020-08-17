@@ -39,9 +39,7 @@ function MoviePage(props) {
 
   return (
     <div className="container">
-      <div className="row no-gutters">
-        <MoviePreview movie={movie} />
-      </div>
+      <MoviePreview movie={movie} />
       {/* <MovieTabs movieId={movieId} /> */}
       <Nav tabs>
         <NavItem>
@@ -62,7 +60,7 @@ function MoviePage(props) {
       </Nav>
       <TabPane>
         <Switch>
-          {console.log("path", props.location.pathname)}
+          {/* {console.log("path", props.location.pathname)} */}
           <Route path="/movie/:movieId/video" component={MovieVideo} />
           <Route path="/movie/:movieId/cast" component={MovieCast} />
           <Route

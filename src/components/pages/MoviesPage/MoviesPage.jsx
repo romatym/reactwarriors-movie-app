@@ -109,7 +109,7 @@ export default class MoviesPage extends React.Component {
 
           <div className="container">
             <div className="row mt-4">
-              <div className="col-4">
+              <div className="col-3">
                 <div className="card">
                   <div className="card-body">
                     <h3>Фильтры:</h3>

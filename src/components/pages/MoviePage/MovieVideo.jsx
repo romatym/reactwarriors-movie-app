@@ -4,7 +4,7 @@ import NoVideo from "../../../images/no video.jpg";
 import { Container, Row, Col } from "reactstrap";
 
 const getIFrame = (name, src, ...rest) => {
-  return <iframe {...rest} title={name} frameBorder="0" src={src} />;
+  return <iframe className="iframe-video" {...rest} title={name} frameBorder="0" src={src} allowfullscreen="allowfullscreen"/>;
 };
 
 const getVideoContainer = (video) => {
@@ -12,7 +12,7 @@ const getVideoContainer = (video) => {
 
   switch (site) {
     case "YouTube":
-      return getIFrame(name, `https://www.youtube.com/embed/${key}?controls=0`);
+      return getIFrame(name, `https://www.youtube.com/embed/${key}?controls=1`);
     case "Vimeo":
       return getIFrame(
         name,
@@ -25,7 +25,6 @@ const getVideoContainer = (video) => {
 };
 
 function MovieVideo(props) {
-
   console.log("MovieVideo props", props);
 
   const movieId = props.match.params.movieId;
@@ -52,45 +51,25 @@ function MovieVideo(props) {
     );
   }
   return (
-    <Container>
-      {videos.map((video, index) => {
-        // let videoContainer = "";
-        // if (video.site === "YouTube") {
-        //   videoContainer = (
-        //     <iframe
-        //       title={video.name}
-        //       frameBorder="0"
-        //       src={`https://www.youtube.com/embed/${video.key}?controls=0`}
-        //     />
-        //   );
-        // } else if (video.site === "Vimeo") {
-        //   videoContainer = (
-        //     <iframe
-        //       title={video.name}
-        //       className="videoWrapper iframe"
-        //       frameBorder="0"
-        //       webkitallowfullscreen
-        //       mozallowfullscreen
-        //       src={`https://vimeo.com/video/${video.key}?title=0&byline=0`}
-        //     />
-        //   );
-        // } else {
-        //   videoContainer = (
-        //     <img
-        //       className="card-img-top card-img--height"
-        //       src={NoVideo}
-        //       alt=""
-        //     />
-        //   );
-        // }
-
-        return (
-          <Row key={index}>
-            <Col className="videoWrapper">{getVideoContainer(video)}</Col>
-          </Row>
-        );
-      })}
-    </Container>
+    <div className="content">
+      <div className="row">
+        {videos.map((video, index) => {
+          return <div className="col-6 ">{getVideoContainer(video)}</div>;
+        })}
+      </div>
+    </div>
+    // <Container>
+    //   {videos.map((video, index) => {
+    //     return (
+    //       <div className="row">
+    //         <div className="col-6 video-col-6">{getVideoContainer(video)}</div>
+    //       </div>
+    //       // <Row key={index}>
+    //       //   <Col className="col-6 videoWrapper">{getVideoContainer(video)}</Col>
+    //       // </Row>
+    //     );
+    //   })}
+    // </Container>
   );
 }
 
