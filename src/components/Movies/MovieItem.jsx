@@ -23,7 +23,7 @@ class MovieItem extends React.Component {
         </Link>
 
         <div className="card-body p-3">
-          <Link className="card-title" to={`/movie/${item.id}/details`}>
+          <Link className="card-title movie-title" to={`/movie/${item.id}/details`}>
             {item.title}
           </Link>
           <div className="d-flex justify-content-between">
