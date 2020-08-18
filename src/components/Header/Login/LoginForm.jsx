@@ -27,7 +27,6 @@ class LoginForm extends React.Component {
   };
 
   handleBlur = (event) => {
-    //console.log("event.target", event.target);
     const { name } = event.target;
 
     const errors = this.validateFields();
@@ -91,7 +90,6 @@ class LoginForm extends React.Component {
         });
       })
       .then((user) => {
-        //console.log("запрос вернул user, session_id", user, session_id);
 
         this.props.authActions.updateAuth({user, session_id});
         this.props.authActions.toggleShowLogin();

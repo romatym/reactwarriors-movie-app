@@ -6,7 +6,6 @@ import { BrowserRouter, Route } from "react-router-dom";
 
 import { withAuth } from "../hoc/withAuth";
 
-// export const AppContext = React.createContext();
 class App extends React.Component {
   componentDidMount() {
     const { auth, authActions } = this.props;

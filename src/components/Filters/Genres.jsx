@@ -3,9 +3,6 @@ import PropTypes from "prop-types";
 import GenresHOC from "./GenresHOC";
 
 const Genres = ({ genres, with_genres, onChangeGenre }) => {
-  // console.log("with_genres1", with_genres);
-  // console.log("genres1", genres); this.props
-  //console.log("updateFilters");
 
   return (
     <div className="form-group">
@@ -31,7 +28,6 @@ const Genres = ({ genres, with_genres, onChangeGenre }) => {
     </div>
   );
 };
-//);
 
 Genres.defaultProps = {
   genres: [],

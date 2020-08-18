@@ -66,11 +66,8 @@ export default Component =>
     render() {
       const { movies, loaded } = this.state;
       
-      //  console.log("this.props", this.props);
-
       return (
         <Component
-          //user={user}
           movies={movies}
           loaded={loaded}
           favorite={this.props.favorite}

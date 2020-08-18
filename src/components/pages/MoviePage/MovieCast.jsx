@@ -4,7 +4,6 @@ import Image from "../../ImageCard/Image";
 import { Card, Row, Col } from "reactstrap";
 
 function MovieCast(props) {
-  console.log("MovieCast props", props);
 
   const movieId = props.match.params.movieId;
   const [cast, setCast] = useState([]);
@@ -30,11 +29,8 @@ function MovieCast(props) {
     );
   }
 
-  console.log("MovieCast -> data.cast", cast);
-
   return (
     <Row>
-      {/* {!castLoaded && <div className="loader text-center"></div>} */}
       {cast
         .filter((actor) => actor.profile_path)
         .map((actor) => {

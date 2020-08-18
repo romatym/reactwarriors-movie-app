@@ -51,8 +51,6 @@ export default Component =>
       const { genres } = this.state;
       const onChangeGenre = this.onChangeGenre;
 
-      //   console.log("Component", Component);
-
       return (
         <React.Fragment>
           <Component

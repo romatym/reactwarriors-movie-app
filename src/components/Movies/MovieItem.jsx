@@ -14,13 +14,13 @@ class MovieItem extends React.Component {
 
     return (
       <div className="card width100 shadow mb-3 bg-white rounded">
-        <a href={`/movie/${item.id}/details`}>
+        <Link to={`/movie/${item.id}/details`}>
           <Image
             imagePath={imagePath}
             notAvailablePath={NoImage}
             className="card-img-top card-img--height"
           />
-        </a>
+        </Link>
 
         <div className="card-body p-3">
           <Link className="card-title" to={`/movie/${item.id}/details`}>

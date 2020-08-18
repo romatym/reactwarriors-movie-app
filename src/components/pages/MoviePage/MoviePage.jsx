@@ -35,8 +35,6 @@ function MoviePage(props) {
     return <div className="loader" />;
   }
 
-  console.log("movie", movie);
-
   return (
     <div className="container">
       <MoviePreview movie={movie} />
@@ -60,7 +58,6 @@ function MoviePage(props) {
       </Nav>
       <TabPane>
         <Switch>
-          {/* {console.log("path", props.location.pathname)} */}
           <Route path="/movie/:movieId/video" component={MovieVideo} />
           <Route path="/movie/:movieId/cast" component={MovieCast} />
           <Route
